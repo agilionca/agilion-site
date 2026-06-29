@@ -85,12 +85,16 @@ const enURL = normalizeHref(new URL(enPath, Astro.site));
 
     <!-- Inter self-hosted — preload weights used in LCP -->
     <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-700.woff2" as="font" type="font/woff2" crossorigin />
 
-    <!-- hreflang alternates -->
-    <link rel="alternate" hreflang="fr-CA" href={frURL} />
-    <link rel="alternate" hreflang="en-US" href={enURL} />
-    <link rel="alternate" hreflang="x-default" href={frURL} />
+    <!-- hreflang alternates — omis sur les pages noindex -->
+    {!noindex && (
+      <>
+        <link rel="alternate" hreflang="fr-CA" href={frURL} />
+        <link rel="alternate" hreflang="en-US" href={enURL} />
+        <link rel="alternate" hreflang="x-default" href={frURL} />
+      </>
+    )}
   </head>
   <body class="flex flex-col min-h-screen">
     <a

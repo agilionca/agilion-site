@@ -49,7 +49,7 @@ const TURNSTILE_SITEKEY = import.meta.env.PUBLIC_TURNSTILE_SITEKEY ?? '1x0000000
       placeholder={t('contact.form.placeholder.name')}
       class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-gray-900 placeholder-gray-400"
     />
-    <p id="name-error" class="mt-1 text-sm text-red-600 hidden" role="alert"></p>
+    <p id="name-error" class="mt-1 text-sm text-red-600 hidden" aria-live="polite" aria-atomic="true"></p>
   </div>
 
   <!-- Courriel / Email -->
@@ -68,7 +68,7 @@ const TURNSTILE_SITEKEY = import.meta.env.PUBLIC_TURNSTILE_SITEKEY ?? '1x0000000
       placeholder={t('contact.form.placeholder.email')}
       class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-gray-900 placeholder-gray-400"
     />
-    <p id="email-error" class="mt-1 text-sm text-red-600 hidden" role="alert"></p>
+    <p id="email-error" class="mt-1 text-sm text-red-600 hidden" aria-live="polite" aria-atomic="true"></p>
   </div>
 
   <!-- Téléphone (optionnel) -->
@@ -117,7 +117,7 @@ const TURNSTILE_SITEKEY = import.meta.env.PUBLIC_TURNSTILE_SITEKEY ?? '1x0000000
       placeholder={t('contact.form.placeholder.message')}
       class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-gray-900 placeholder-gray-400 resize-y"
     ></textarea>
-    <p id="message-error" class="mt-1 text-sm text-red-600 hidden" role="alert"></p>
+    <p id="message-error" class="mt-1 text-sm text-red-600 hidden" aria-live="polite" aria-atomic="true"></p>
   </div>
 
   <!-- Cloudflare Turnstile -->

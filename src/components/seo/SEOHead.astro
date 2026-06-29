@@ -76,7 +76,7 @@ const articleSchema =
 
 <!-- Primary meta -->
 <meta name="description" content={description} />
-<link rel="canonical" href={canonicalStr} />
+{!noindex && <link rel="canonical" href={canonicalStr} />}
 
 <!-- Robots -->
 {noindex && <meta name="robots" content="noindex,nofollow" />}

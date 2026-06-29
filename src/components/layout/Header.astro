@@ -104,7 +104,6 @@ const homeHref = lang === 'fr' ? '/' : '/en';
         <label
           for="mobile-menu-toggle"
           class="md:hidden flex flex-col justify-center items-center w-10 h-10 cursor-pointer rounded-lg hover:bg-white/10 transition-colors"
-          aria-label={lang === 'fr' ? 'Ouvrir le menu' : 'Open menu'}
         >
           <span class="sr-only">Menu</span>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -116,8 +115,10 @@ const homeHref = lang === 'fr' ? '/' : '/en';
   </div>
 
   <!-- Mobile menu — keyboard accessible: checkbox focusable, label has matching for -->
-  <input type="checkbox" id="mobile-menu-toggle" class="peer sr-only" aria-label={lang === 'fr' ? 'Ouvrir le menu de navigation' : 'Open navigation menu'} />
+  <input type="checkbox" id="mobile-menu-toggle" class="peer sr-only" aria-label={lang === 'fr' ? 'Ouvrir le menu de navigation' : 'Open navigation menu'} aria-expanded="false" />
   <div
+    id="mobile-nav-panel"
+    aria-hidden="true"
     class="md:hidden max-h-0 overflow-hidden peer-checked:max-h-screen transition-all duration-300 ease-in-out bg-primary border-t border-white/10"
   >
     <nav
@@ -153,9 +154,18 @@ const homeHref = lang === 'fr' ? '/' : '/en';
 
 <script>
   const toggle = document.getElementById('mobile-menu-toggle') as HTMLInputElement | null;
-  if (toggle) {
+  const panel = document.getElementById('mobile-nav-panel');
+  if (toggle && panel) {
+    toggle.addEventListener('change', () => {
+      toggle.setAttribute('aria-expanded', String(toggle.checked));
+      panel.setAttribute('aria-hidden', String(!toggle.checked));
+    });
     document.querySelectorAll('#mobile-nav a').forEach(a => {
-      a.addEventListener('click', () => { toggle.checked = false; });
+      a.addEventListener('click', () => {
+        toggle.checked = false;
+        toggle.setAttribute('aria-expanded', 'false');
+        panel.setAttribute('aria-hidden', 'true');
+      });
     });
   }
 </script>

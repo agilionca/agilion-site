@@ -15,4 +15,22 @@ Disallow: /
 User-agent: anthropic-ai
 Allow: /
 
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: OmniGPT
+Disallow: /
+
 Sitemap: https://agilion.ca/sitemap-index.xml

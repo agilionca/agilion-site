@@ -35,7 +35,13 @@ RewriteRule ^(.*)$ https://agilion.ca/$1 [L,R=301]
     Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com;"
 </IfModule>
 
-# 6. Cache statique (assets Astro avec hash dans le nom)
+# 6. MIME types
+AddType font/woff2 .woff2
+AddType font/woff .woff
+AddType image/webp .webp
+AddType image/avif .avif
+
+# 7. Cache statique (assets Astro avec hash dans le nom)
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresByType text/html "access plus 1 hour"
@@ -48,15 +54,15 @@ RewriteRule ^(.*)$ https://agilion.ca/$1 [L,R=301]
     ExpiresByType font/woff2 "access plus 1 year"
 </IfModule>
 
-# 7. Gzip compression
+# 8. Gzip compression
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
 </IfModule>
 
-# 8. Astro SPA-like routing (404 -> pages custom)
+# 9. Astro SPA-like routing (404 -> pages custom)
 ErrorDocument 404 /404.html
 
-# 9. Bloquer les user agents malveillants courants
+# 10. Bloquer les user agents malveillants courants
 <IfModule mod_rewrite.c>
     RewriteCond %{HTTP_USER_AGENT} (semrushbot|dotbot|mj12bot|ahrefsbot|petalbot) [NC]
     RewriteRule .* - [F,L]
