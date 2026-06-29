@@ -14,9 +14,7 @@ export function getLangFromUrl(url: URL): Lang {
 
 export function useTranslations(lang: Lang) {
   return function t(key: UiKey): string {
-    const translations = ui[lang] as Record<string, string>;
-    const fallback = ui[DEFAULT_LANG] as Record<string, string>;
-    return translations[key] ?? fallback[key] ?? key;
+    return (ui[lang][key] ?? ui[DEFAULT_LANG][key] ?? key) as string;
   };
 }
 
@@ -26,6 +24,6 @@ export function getLocalePath(path: string, lang: Lang): string {
 }
 
 export function getAlternatePath(currentPath: string, targetLang: Lang): string {
-  const withoutPrefix = currentPath.replace(/^\/en/, '') || '/';
+  const withoutPrefix = currentPath.replace(/^\/en(?=\/|$)/, '') || '/';
   return targetLang === DEFAULT_LANG ? withoutPrefix : `/en${withoutPrefix}`;
 }

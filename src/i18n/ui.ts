@@ -8,7 +8,7 @@ export const ui = {
     'nav.blog': 'Blogue',
 
     // Hero
-    'hero.title': 'La puissance du cloud,\nau service de votre croissance',
+    'hero.title': 'La puissance du cloud, au service de votre croissance',
     'hero.subtitle': 'Agilion accompagne les entreprises canadiennes et américaines dans leur transformation numérique — solutions sur mesure, intégration, cloud et cybersécurité.',
     'hero.cta.primary': 'Obtenir un devis gratuit',
     'hero.cta.secondary': 'Découvrir nos services',
@@ -73,6 +73,7 @@ export const ui = {
     'footer.rights': 'Tous droits réservés.',
     'footer.privacy': 'Politique de confidentialité',
     'footer.tagline': 'La puissance de l\'informatique dans le cloud à votre service',
+    'footer.col.company': 'Entreprise',
 
     // Common
     'common.learnMore': 'En savoir plus',
@@ -88,7 +89,7 @@ export const ui = {
     'nav.blog': 'Blog',
 
     // Hero
-    'hero.title': 'Cloud-Powered IT Solutions\nfor Your Business Growth',
+    'hero.title': 'Cloud-Powered IT Solutions for Your Business Growth',
     'hero.subtitle': 'Agilion helps Canadian and American businesses accelerate their digital transformation — custom software, integrations, cloud infrastructure, and cybersecurity.',
     'hero.cta.primary': 'Get a Free Quote',
     'hero.cta.secondary': 'Explore Our Services',
@@ -153,6 +154,7 @@ export const ui = {
     'footer.rights': 'All rights reserved.',
     'footer.privacy': 'Privacy Policy',
     'footer.tagline': 'Cloud-powered IT solutions for your business',
+    'footer.col.company': 'Company',
 
     // Common
     'common.learnMore': 'Learn More',

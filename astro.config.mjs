@@ -6,7 +6,15 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://agilion.ca',
   output: 'static',
-  integrations: [mdx(), sitemap()],
+  integrations: [
+    mdx(),
+    sitemap({
+      i18n: {
+        defaultLocale: 'fr',
+        locales: { fr: 'fr-CA', en: 'en-US' }
+      }
+    })
+  ],
   vite: {
     plugins: [tailwindcss()]
   },
