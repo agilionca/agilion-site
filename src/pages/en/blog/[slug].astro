@@ -32,6 +32,7 @@ const { title, description, pubDate, updatedDate, author, tags, category, readin
 const lang = 'en' as const;
 const computedReadingTime = readingTime ?? estimateReadingTime(article.body ?? '');
 const canonicalURL = new URL(`/en/blog/${article.id}`, Astro.site).toString();
+const alternateUrl = translationSlug ? `/blogue/${translationSlug}` : undefined;
 ---
 
 <BaseLayout
@@ -45,6 +46,7 @@ const canonicalURL = new URL(`/en/blog/${article.id}`, Astro.site).toString();
   modifiedDate={updatedDate?.toISOString()}
   articleTags={tags}
   alternateSlug={translationSlug ? `/blogue/${translationSlug}` : undefined}
+  alternateUrl={alternateUrl}
 >
   <article class="container-site py-12 max-w-3xl mx-auto">
     <!-- Back link -->

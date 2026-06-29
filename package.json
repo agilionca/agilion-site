@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate:article": "tsx scripts/generate-article.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.106.0",

@@ -4,12 +4,14 @@ import { getAlternatePath, type Lang } from '@i18n/index';
 interface Props {
   lang: Lang;
   currentPath: string;
+  alternateUrl?: string; // Override pour les articles traduits
 }
 
-const { lang, currentPath } = Astro.props;
+const { lang, currentPath, alternateUrl } = Astro.props;
 
-const frPath = getAlternatePath(currentPath, 'fr');
-const enPath = getAlternatePath(currentPath, 'en');
+// Si alternateUrl est fourni, l'utiliser pour la langue cible ; sinon calculer automatiquement
+const frPath = lang === 'fr' ? currentPath : (alternateUrl ?? getAlternatePath(currentPath, 'fr'));
+const enPath = lang === 'en' ? currentPath : (alternateUrl ?? getAlternatePath(currentPath, 'en'));
 ---
 
 <nav

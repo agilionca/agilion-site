@@ -5,9 +5,10 @@ import { useTranslations, type Lang } from '@i18n/index';
 interface Props {
   lang: Lang;
   currentPath: string;
+  alternateUrl?: string; // Override pour le switcher de langue sur les articles
 }
 
-const { lang, currentPath } = Astro.props;
+const { lang, currentPath, alternateUrl } = Astro.props;
 const t = useTranslations(lang);
 
 // Explicit FR and EN paths for each nav item
@@ -91,7 +92,7 @@ const homeHref = lang === 'fr' ? '/' : '/en';
       <!-- Right side: Language switcher + CTA + hamburger -->
       <div class="flex items-center gap-3">
         <div class="hidden sm:flex">
-          <LanguageSwitcher lang={lang} currentPath={currentPath} />
+          <LanguageSwitcher lang={lang} currentPath={currentPath} alternateUrl={alternateUrl} />
         </div>
         <a
           href={contactHref}
@@ -140,7 +141,7 @@ const homeHref = lang === 'fr' ? '/' : '/en';
         })
       }
       <div class="mt-3 pt-3 border-t border-white/10 flex items-center justify-between">
-        <LanguageSwitcher lang={lang} currentPath={currentPath} />
+        <LanguageSwitcher lang={lang} currentPath={currentPath} alternateUrl={alternateUrl} />
         <a
           href={contactHref}
           class="px-4 py-2 bg-accent text-white font-semibold text-sm rounded-lg hover:bg-amber-500 transition-colors"

@@ -49,6 +49,8 @@ const organizationSchema = {
   sameAs: ['https://linkedin.com/company/agilion', 'https://github.com/agilionca'],
 };
 
+const articleHeadline = title.replace(/\s*—\s*Agilion\s*$/, '').trim();
+
 const articleSchema =
   ogType === 'article'
     ? {
@@ -56,7 +58,8 @@ const articleSchema =
         '@type': 'Article',
         url: canonicalStr,
         mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalStr },
-        headline: title,
+        headline: articleHeadline,
+        description: description,
         datePublished: publishedDate,
         dateModified: modifiedDate ?? publishedDate,
         author: {

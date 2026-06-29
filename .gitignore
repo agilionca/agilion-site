@@ -27,6 +27,9 @@ vendor/*
 !vendor/PHPMailer/
 !vendor/PHPMailer/*.php
 
+# Script state — topic rotation index (local only)
+scripts/prompts/.last-topic-index
+
 # macOS-specific files
 .DS_Store
 

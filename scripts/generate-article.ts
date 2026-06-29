@@ -19,28 +19,43 @@ interface Topic {
 }
 
 async function generateArticle(topic: Topic, lang: 'fr' | 'en'): Promise<string> {
-  const templatePath = resolve('scripts/prompts/tech-article.txt');
-  const template = readFileSync(templatePath, 'utf-8');
+  // Choisir le template selon la catégorie
+  const templateFile = topic.category === 'consultation' ? 'business-article.txt' : 'tech-article.txt';
+  const template = readFileSync(resolve(`scripts/prompts/${templateFile}`), 'utf-8');
+
+  // System prompt avec template complet (>1024 tokens pour activer le cache Anthropic)
+  const systemPrompt = `Tu es un expert en rédaction de contenu B2B pour des firmes TI. Tu génères du contenu MDX précis, factuel et optimisé SEO.
+
+CONTEXTE AGILION :
+- Services : développement logiciel sur mesure, intégration APIs, cloud (AWS/Azure/GCP), cybersécurité, développement web, consultation TI
+- Clients : PME québécoises et entreprises canadiennes/américaines
+- Mission : transformer les défis TI en avantages compétitifs
+- Ton : professionnel mais accessible, concret, basé sur des faits
+
+INSTRUCTIONS DE GÉNÉRATION :
+${template}`;
 
   const title = lang === 'fr' ? topic.titleFR : topic.titleEN;
-  const prompt = template
-    .replace('{{TITLE}}', title)
-    .replace('{{LANG}}', lang === 'fr' ? 'Français (québécois)' : 'English (North American)')
-    .replace('{{CATEGORY}}', topic.category)
-    .replace('{{KEYWORDS}}', topic.keywords.join(', '));
+  const langLabel = lang === 'fr' ? 'Français québécois professionnel' : 'North American English';
 
-  // Utilise le cache Anthropic pour réduire les coûts (contexte système réutilisé)
+  const userMessage = `Génère un article MDX complet sur: "${title}"
+Langue: ${langLabel}
+Catégorie: ${topic.category}
+Mots-clés: ${topic.keywords.join(', ')}
+Audience cible: ${topic.targetAudience}`;
+
+  // Utilise le cache Anthropic — system prompt >1024 tokens pour activer ephemeral cache
   const response = await client.messages.create({
     model: 'claude-sonnet-4-6',
-    max_tokens: 2000,
+    max_tokens: 3000,
     system: [
       {
         type: 'text',
-        text: 'Tu es un expert en rédaction de contenu B2B pour des firmes TI. Tu génères du contenu MDX précis, factuel et optimisé SEO.',
+        text: systemPrompt,
         cache_control: { type: 'ephemeral' },
       },
     ],
-    messages: [{ role: 'user', content: prompt }],
+    messages: [{ role: 'user', content: userMessage }],
   });
 
   const content = response.content[0];
@@ -75,20 +90,32 @@ function addFrontmatterDefaults(
   _slug: string,
   translationSlug: string
 ): string {
-  const today = new Date().toISOString().split('T')[0];
+  // Normaliser les line endings (robustesse CRLF)
+  mdx = mdx.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
 
-  if (!mdx.includes('lang:')) {
-    mdx = mdx.replace('---\n', `---\nlang: "${lang}"\n`);
+  // Valider que le frontmatter existe au début
+  if (!mdx.startsWith('---\n')) {
+    // Claude ajoute parfois du texte avant le frontmatter
+    const fmStart = mdx.indexOf('---\n');
+    if (fmStart === -1) {
+      throw new Error(`Claude n'a pas généré de frontmatter valide pour ${lang}. Contenu reçu:\n${mdx.substring(0, 200)}`);
+    }
+    mdx = mdx.substring(fmStart);
   }
-  if (!mdx.includes('translationSlug:')) {
-    mdx = mdx.replace('---\n', `---\ntranslationSlug: "${translationSlug}"\n`);
+
+  const today = new Date().toISOString().split('T')[0];
+  const insertAfterDashes = '---\n';
+
+  const additions: string[] = [];
+  if (!mdx.includes('lang:')) additions.push(`lang: "${lang}"`);
+  if (!mdx.includes('translationSlug:')) additions.push(`translationSlug: "${translationSlug}"`);
+  if (!mdx.includes('pubDate:')) additions.push(`pubDate: ${today}`);
+  if (!mdx.includes('draft:')) additions.push(`draft: false`);
+
+  if (additions.length > 0) {
+    mdx = insertAfterDashes + additions.join('\n') + '\n' + mdx.substring(insertAfterDashes.length);
   }
-  if (!mdx.includes('pubDate:')) {
-    mdx = mdx.replace('---\n', `---\npubDate: ${today}\n`);
-  }
-  if (!mdx.includes('draft:')) {
-    mdx = mdx.replace('---\n', `---\ndraft: false\n`);
-  }
+
   return mdx;
 }
 
