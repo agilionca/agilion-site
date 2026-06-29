@@ -41,7 +41,7 @@ const organizationSchema = {
   '@type': 'Organization',
   name: 'Agilion',
   url: siteURL,
-  logo: `${siteURL}/favicon.svg`,
+  logo: `${siteURL}/og/og-default.svg`,
   description:
     lang === 'fr'
       ? 'Firme TI québécoise spécialisée en développement logiciel sur mesure, cloud, cybersécurité et consultation numérique.'
@@ -54,6 +54,8 @@ const articleSchema =
     ? {
         '@context': 'https://schema.org',
         '@type': 'Article',
+        url: canonicalStr,
+        mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalStr },
         headline: title,
         datePublished: publishedDate,
         dateModified: modifiedDate ?? publishedDate,
@@ -65,7 +67,7 @@ const articleSchema =
         publisher: {
           '@type': 'Organization',
           name: 'Agilion',
-          logo: { '@type': 'ImageObject', url: `${siteURL}/favicon.svg` },
+          logo: { '@type': 'ImageObject', url: `${siteURL}/og/og-default.svg` },
         },
         ...(ogImageURL ? { image: ogImageURL } : {}),
       }
@@ -88,6 +90,8 @@ const articleSchema =
 <meta property="og:locale" content={ogLocale} />
 <meta property="og:locale:alternate" content={ogLocaleAlt} />
 {ogImageURL && <meta property="og:image" content={ogImageURL} />}
+{ogImageURL && <meta property="og:image:width" content="1200" />}
+{ogImageURL && <meta property="og:image:height" content="630" />}
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content={ogImageURL ? 'summary_large_image' : 'summary'} />

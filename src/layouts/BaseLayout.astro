@@ -4,6 +4,7 @@ import Footer from '@components/layout/Footer.astro';
 import SEOHead from '@components/seo/SEOHead.astro';
 import '@/styles/global.css';
 import type { Lang } from '@i18n/index';
+import { getAlternatePath } from '@i18n/index';
 
 interface Props {
   title: string;
@@ -16,6 +17,7 @@ interface Props {
   modifiedDate?: string;
   articleTags?: string[];
   noindex?: boolean;
+  alternateSlug?: string; // ex: '/en/about' depuis /a-propos
 }
 
 const {
@@ -23,21 +25,26 @@ const {
   description,
   lang,
   canonicalURL = Astro.url.href,
-  ogImage,
+  ogImage = '/og/og-default.svg',
   ogType = 'website',
   publishedDate,
   modifiedDate,
   articleTags,
   noindex = false,
+  alternateSlug,
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
 const siteName = 'Agilion';
 const fullTitle = title.includes(siteName) ? title : `${title} — ${siteName}`;
 
-// hreflang URLs
-const frPath = lang === 'fr' ? currentPath : (currentPath.replace(/^\/en(?=\/|$)/, '') || '/');
-const enPath = lang === 'fr' ? `/en${currentPath}` : currentPath;
+// hreflang URLs — utilise alternateSlug si fourni, sinon getAlternatePath
+const frPath = lang === 'fr'
+  ? currentPath
+  : (alternateSlug ?? getAlternatePath(currentPath, 'fr'));
+const enPath = lang === 'en'
+  ? currentPath
+  : (alternateSlug ?? getAlternatePath(currentPath, 'en'));
 const frURL = new URL(frPath, Astro.site).toString();
 const enURL = new URL(enPath, Astro.site).toString();
 ---

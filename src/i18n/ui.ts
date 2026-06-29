@@ -17,6 +17,7 @@ export const ui = {
     'trustbar.since': 'Depuis 2015',
     'trustbar.projects': '50+ projets livrés',
     'trustbar.clients': 'Clients au Canada et aux USA',
+    'trustbar.ariaLabel': 'Chiffres clés Agilion',
 
     // Services — section
     'services.title': 'Nos services',
@@ -184,6 +185,7 @@ export const ui = {
     'trustbar.since': 'Since 2015',
     'trustbar.projects': '50+ Projects Delivered',
     'trustbar.clients': 'Clients Across Canada & USA',
+    'trustbar.ariaLabel': 'Agilion key figures',
 
     // Services — section
     'services.title': 'Our Services',

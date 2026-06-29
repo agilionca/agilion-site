@@ -20,7 +20,7 @@ const enPath = getAlternatePath(currentPath, 'en');
   <a
     href={frPath}
     hreflang="fr"
-    aria-current={lang === 'fr' ? 'true' : undefined}
+    aria-current={lang === 'fr' ? 'page' : undefined}
     class={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-150 focus-visible:outline-2 focus-visible:outline-offset-1 ${
       lang === 'fr'
         ? 'bg-white text-primary cursor-default pointer-events-none'
@@ -32,7 +32,7 @@ const enPath = getAlternatePath(currentPath, 'en');
   <a
     href={enPath}
     hreflang="en"
-    aria-current={lang === 'en' ? 'true' : undefined}
+    aria-current={lang === 'en' ? 'page' : undefined}
     class={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-150 focus-visible:outline-2 focus-visible:outline-offset-1 ${
       lang === 'en'
         ? 'bg-white text-primary cursor-default pointer-events-none'
