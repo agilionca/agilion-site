@@ -1,0 +1,114 @@
+---
+import type { Lang } from '@i18n/index';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+  canonicalURL: URL | string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  publishedDate?: string;
+  modifiedDate?: string;
+  articleTags?: string[];
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  lang,
+  canonicalURL,
+  ogImage,
+  ogType = 'website',
+  publishedDate,
+  modifiedDate,
+  articleTags = [],
+  noindex = false,
+} = Astro.props;
+
+const siteName = 'Agilion';
+const siteURL = 'https://agilion.ca';
+const canonicalStr = canonicalURL.toString();
+const ogLocale = lang === 'fr' ? 'fr_CA' : 'en_US';
+const ogLocaleAlt = lang === 'fr' ? 'en_US' : 'fr_CA';
+const ogImageURL = ogImage
+  ? (ogImage.startsWith('http') ? ogImage : new URL(ogImage, siteURL).toString())
+  : undefined;
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Agilion',
+  url: siteURL,
+  logo: `${siteURL}/favicon.svg`,
+  description:
+    lang === 'fr'
+      ? 'Firme TI québécoise spécialisée en développement logiciel sur mesure, cloud, cybersécurité et consultation numérique.'
+      : 'Quebec IT firm specializing in custom software development, cloud, cybersecurity, and digital consulting.',
+  sameAs: ['https://linkedin.com/company/agilion', 'https://github.com/agilionca'],
+};
+
+const articleSchema =
+  ogType === 'article'
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: title,
+        datePublished: publishedDate,
+        dateModified: modifiedDate ?? publishedDate,
+        author: {
+          '@type': 'Organization',
+          name: 'Agilion',
+          url: siteURL,
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'Agilion',
+          logo: { '@type': 'ImageObject', url: `${siteURL}/favicon.svg` },
+        },
+        ...(ogImageURL ? { image: ogImageURL } : {}),
+      }
+    : null;
+---
+
+<!-- Primary meta -->
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalStr} />
+
+<!-- Robots -->
+{noindex && <meta name="robots" content="noindex,nofollow" />}
+
+<!-- Open Graph -->
+<meta property="og:type" content={ogType} />
+<meta property="og:url" content={canonicalStr} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content={ogLocale} />
+<meta property="og:locale:alternate" content={ogLocaleAlt} />
+{ogImageURL && <meta property="og:image" content={ogImageURL} />}
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content={ogImageURL ? 'summary_large_image' : 'summary'} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{ogImageURL && <meta name="twitter:image" content={ogImageURL} />}
+
+<!-- Article-specific meta -->
+{ogType === 'article' && publishedDate && (
+  <meta property="article:published_time" content={publishedDate} />
+)}
+{ogType === 'article' && modifiedDate && (
+  <meta property="article:modified_time" content={modifiedDate} />
+)}
+{ogType === 'article' && articleTags.map((tag) => (
+  <meta property="article:tag" content={tag} />
+))}
+
+<!-- Schema.org JSON-LD -->
+{ogType === 'article' && articleSchema ? (
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+) : (
+  <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+)}

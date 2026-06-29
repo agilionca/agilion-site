@@ -12,14 +12,18 @@ const frPath = getAlternatePath(currentPath, 'fr');
 const enPath = getAlternatePath(currentPath, 'en');
 ---
 
-<div class="flex items-center gap-1 rounded-full border border-white/30 p-0.5" role="navigation" aria-label="Language switcher">
+<nav
+  class="flex items-center gap-1 rounded-full border border-white/30 p-0.5"
+  role="navigation"
+  aria-label="Sélection de langue / Language selection"
+>
   <a
     href={frPath}
     hreflang="fr"
-    aria-current={lang === 'fr' ? 'page' : undefined}
-    class={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-1 ${
+    aria-current={lang === 'fr' ? 'true' : undefined}
+    class={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-150 focus-visible:outline-2 focus-visible:outline-offset-1 ${
       lang === 'fr'
-        ? 'bg-white text-primary'
+        ? 'bg-white text-primary cursor-default pointer-events-none'
         : 'text-white/80 hover:text-white hover:bg-white/10'
     }`}
   >
@@ -28,13 +32,13 @@ const enPath = getAlternatePath(currentPath, 'en');
   <a
     href={enPath}
     hreflang="en"
-    aria-current={lang === 'en' ? 'page' : undefined}
-    class={`px-3 py-1 rounded-full text-sm font-medium transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-1 ${
+    aria-current={lang === 'en' ? 'true' : undefined}
+    class={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-150 focus-visible:outline-2 focus-visible:outline-offset-1 ${
       lang === 'en'
-        ? 'bg-white text-primary'
+        ? 'bg-white text-primary cursor-default pointer-events-none'
         : 'text-white/80 hover:text-white hover:bg-white/10'
     }`}
   >
     EN
   </a>
-</div>
+</nav>

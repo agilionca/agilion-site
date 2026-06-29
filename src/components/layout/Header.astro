@@ -1,6 +1,6 @@
 ---
 import LanguageSwitcher from './LanguageSwitcher.astro';
-import { useTranslations, getLocalePath, type Lang } from '@i18n/index';
+import { useTranslations, type Lang } from '@i18n/index';
 
 interface Props {
   lang: Lang;
@@ -10,13 +10,18 @@ interface Props {
 const { lang, currentPath } = Astro.props;
 const t = useTranslations(lang);
 
+// Explicit FR and EN paths for each nav item
+// (about and blog differ between FR and EN, so we don't use getLocalePath)
 const navItems = [
-  { key: 'nav.home' as const, path: '/' },
-  { key: 'nav.services' as const, path: '/services' },
-  { key: 'nav.about' as const, path: '/a-propos' },
-  { key: 'nav.blog' as const, path: '/blogue' },
-  { key: 'nav.contact' as const, path: '/contact' },
+  { key: 'nav.home' as const, frPath: '/', enPath: '/en' },
+  { key: 'nav.services' as const, frPath: '/services', enPath: '/en/services' },
+  { key: 'nav.about' as const, frPath: '/a-propos', enPath: '/en/about' },
+  { key: 'nav.blog' as const, frPath: '/blogue', enPath: '/en/blog' },
+  { key: 'nav.contact' as const, frPath: '/contact', enPath: '/en/contact' },
 ];
+
+const contactHref = lang === 'fr' ? '/contact' : '/en/contact';
+const homeHref = lang === 'fr' ? '/' : '/en';
 ---
 
 <header
@@ -27,7 +32,7 @@ const navItems = [
     <div class="flex items-center justify-between h-16 md:h-20">
       <!-- Logo -->
       <a
-        href={getLocalePath('/', lang)}
+        href={homeHref}
         class="flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         aria-label={lang === 'fr' ? "Agilion — Retour à l'accueil" : "Agilion — Back to home"}
       >
@@ -63,9 +68,9 @@ const navItems = [
         aria-label={lang === 'fr' ? 'Navigation principale' : 'Main navigation'}
       >
         {
-          navItems.map(({ key, path }) => {
-            const href = getLocalePath(path, lang);
-            const isActive = currentPath === href || (path === '/' && currentPath === '');
+          navItems.map(({ key, frPath, enPath }) => {
+            const href = lang === 'fr' ? frPath : enPath;
+            const isActive = currentPath === href || (frPath === '/' && lang === 'fr' && currentPath === '') || (enPath === '/en' && lang === 'en' && currentPath === '/en');
             return (
               <a
                 href={href}
@@ -89,7 +94,7 @@ const navItems = [
           <LanguageSwitcher lang={lang} currentPath={currentPath} />
         </div>
         <a
-          href={getLocalePath('/contact', lang)}
+          href={contactHref}
           class="hidden md:inline-flex items-center gap-1 px-4 py-2 bg-accent text-white font-semibold text-sm rounded-lg hover:bg-amber-500 active:scale-95 transition-all duration-150 shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         >
           {t('common.getQuote')}
@@ -121,8 +126,8 @@ const navItems = [
       aria-label={lang === 'fr' ? 'Navigation mobile' : 'Mobile navigation'}
     >
       {
-        navItems.map(({ key, path }) => {
-          const href = getLocalePath(path, lang);
+        navItems.map(({ key, frPath, enPath }) => {
+          const href = lang === 'fr' ? frPath : enPath;
           return (
             <a
               href={href}
@@ -136,7 +141,7 @@ const navItems = [
       <div class="mt-3 pt-3 border-t border-white/10 flex items-center justify-between">
         <LanguageSwitcher lang={lang} currentPath={currentPath} />
         <a
-          href={getLocalePath('/contact', lang)}
+          href={contactHref}
           class="px-4 py-2 bg-accent text-white font-semibold text-sm rounded-lg hover:bg-amber-500 transition-colors"
         >
           {t('common.getQuote')}
