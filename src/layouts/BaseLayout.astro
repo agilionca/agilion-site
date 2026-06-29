@@ -1,0 +1,91 @@
+---
+import Header from '@components/layout/Header.astro';
+import Footer from '@components/layout/Footer.astro';
+import '@/styles/global.css';
+import type { Lang } from '@i18n/index';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+  canonicalURL?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description,
+  lang,
+  canonicalURL = Astro.url.href,
+  ogImage = '/og-default.png',
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const siteName = 'Agilion';
+const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
+---
+
+<!doctype html>
+<html lang={lang} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta -->
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site)} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content={lang === 'fr' ? 'fr_CA' : 'en_US'} />
+    <meta property="og:locale:alternate" content={lang === 'fr' ? 'en_US' : 'fr_CA'} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, Astro.site)} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..700;1,14..32,300..400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- hreflang alternates -->
+    {
+      lang === 'fr' ? (
+        <>
+          <link rel="alternate" hreflang="fr" href={new URL(currentPath, Astro.site)} />
+          <link rel="alternate" hreflang="en" href={new URL(`/en${currentPath}`, Astro.site)} />
+          <link rel="alternate" hreflang="x-default" href={new URL(currentPath, Astro.site)} />
+        </>
+      ) : (
+        <>
+          <link rel="alternate" hreflang="fr" href={new URL(currentPath.replace(/^\/en/, '') || '/', Astro.site)} />
+          <link rel="alternate" hreflang="en" href={new URL(currentPath, Astro.site)} />
+          <link rel="alternate" hreflang="x-default" href={new URL(currentPath.replace(/^\/en/, '') || '/', Astro.site)} />
+        </>
+      )
+    }
+  </head>
+  <body class="flex flex-col min-h-screen">
+    <Header lang={lang} currentPath={currentPath} />
+    <main class="flex-1" id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>
