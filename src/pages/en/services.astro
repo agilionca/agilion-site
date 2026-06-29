@@ -1,0 +1,162 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ServiceSection from '@components/services/ServiceSection.astro';
+import { useTranslations } from '@i18n/index';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+
+const contactHref = '/en/contact';
+
+const services = [
+  {
+    id: 'custom-software',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+    title: t('services.custom-software.title'),
+    description: t('services.custom-software.longDescription'),
+    bullets: [
+      t('services.custom-software.bullet1'),
+      t('services.custom-software.bullet2'),
+      t('services.custom-software.bullet3'),
+      t('services.custom-software.bullet4'),
+      t('services.custom-software.bullet5'),
+    ],
+    ctaText: t('common.startProject'),
+    ctaHref: contactHref,
+    reversed: false,
+  },
+  {
+    id: 'integration',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="3"/><circle cx="19" cy="19" r="3"/><circle cx="5" cy="19" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><line x1="12" y1="14" x2="19" y2="16"/><line x1="12" y1="14" x2="5" y2="16"/></svg>`,
+    title: t('services.integration.title'),
+    description: t('services.integration.longDescription'),
+    bullets: [
+      t('services.integration.bullet1'),
+      t('services.integration.bullet2'),
+      t('services.integration.bullet3'),
+      t('services.integration.bullet4'),
+      t('services.integration.bullet5'),
+    ],
+    ctaText: t('common.startProject'),
+    ctaHref: contactHref,
+    reversed: true,
+  },
+  {
+    id: 'cloud',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>`,
+    title: t('services.cloud.title'),
+    description: t('services.cloud.longDescription'),
+    bullets: [
+      t('services.cloud.bullet1'),
+      t('services.cloud.bullet2'),
+      t('services.cloud.bullet3'),
+      t('services.cloud.bullet4'),
+      t('services.cloud.bullet5'),
+    ],
+    ctaText: t('common.startProject'),
+    ctaHref: contactHref,
+    reversed: false,
+  },
+  {
+    id: 'cybersecurity',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    title: t('services.cybersecurity.title'),
+    description: t('services.cybersecurity.longDescription'),
+    bullets: [
+      t('services.cybersecurity.bullet1'),
+      t('services.cybersecurity.bullet2'),
+      t('services.cybersecurity.bullet3'),
+      t('services.cybersecurity.bullet4'),
+      t('services.cybersecurity.bullet5'),
+    ],
+    ctaText: t('common.startProject'),
+    ctaHref: contactHref,
+    reversed: true,
+  },
+  {
+    id: 'web',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+    title: t('services.web.title'),
+    description: t('services.web.longDescription'),
+    bullets: [
+      t('services.web.bullet1'),
+      t('services.web.bullet2'),
+      t('services.web.bullet3'),
+      t('services.web.bullet4'),
+      t('services.web.bullet5'),
+    ],
+    ctaText: t('common.startProject'),
+    ctaHref: contactHref,
+    reversed: false,
+  },
+  {
+    id: 'consulting',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><line x1="3" y1="12" x2="9" y2="12"/><line x1="15" y1="12" x2="21" y2="12"/><line x1="12" y1="3" x2="12" y2="9"/><line x1="12" y1="15" x2="12" y2="21"/></svg>`,
+    title: t('services.consulting.title'),
+    description: t('services.consulting.longDescription'),
+    bullets: [
+      t('services.consulting.bullet1'),
+      t('services.consulting.bullet2'),
+      t('services.consulting.bullet3'),
+      t('services.consulting.bullet4'),
+      t('services.consulting.bullet5'),
+    ],
+    ctaText: t('common.startProject'),
+    ctaHref: contactHref,
+    reversed: true,
+  },
+];
+---
+
+<BaseLayout
+  title="Our Services — Agilion"
+  description="Discover Agilion's 6 IT services: custom software development, integration, AWS/Azure/GCP cloud, cybersecurity, web development, and strategic consulting."
+  lang={lang}
+>
+  <!-- Hero compact -->
+  <section class="h-64 bg-primary flex items-center" aria-labelledby="services-hero-heading">
+    <div class="container-site">
+      <h1 id="services-hero-heading" class="text-4xl md:text-5xl font-bold text-white mb-3">
+        {t('services.page.title')}
+      </h1>
+      <p class="text-white/80 text-lg max-w-xl">
+        {t('services.page.subtitle')}
+      </p>
+    </div>
+  </section>
+
+  <!-- Alternating service sections -->
+  {services.map((service, i) => (
+    <div class={i % 2 === 0 ? 'bg-white' : 'bg-surface'}>
+      <ServiceSection
+        id={service.id}
+        icon={service.icon}
+        title={service.title}
+        description={service.description}
+        bullets={service.bullets}
+        ctaText={service.ctaText}
+        ctaHref={service.ctaHref}
+        reversed={service.reversed}
+        lang={lang}
+      />
+    </div>
+  ))}
+
+  <!-- CTA final -->
+  <section class="py-20 bg-primary" aria-labelledby="services-cta-heading">
+    <div class="container-site text-center">
+      <h2 id="services-cta-heading" class="text-3xl font-bold text-white mb-4">
+        {t('cta.title')}
+      </h2>
+      <p class="text-white/80 text-lg mb-8 max-w-lg mx-auto">
+        {t('cta.subtitle')}
+      </p>
+      <a
+        href="/en/contact"
+        class="inline-flex items-center gap-2 px-10 py-4 bg-accent text-white font-bold text-lg rounded-lg hover:bg-amber-500 active:scale-95 transition-all duration-150 shadow-lg shadow-accent/30"
+      >
+        {t('cta.button')}
+      </a>
+    </div>
+  </section>
+</BaseLayout>

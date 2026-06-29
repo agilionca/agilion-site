@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import ServicesGrid from '@components/home/ServicesGrid.astro';
 import { useTranslations } from '@i18n/index';
 
 const lang = 'en' as const;
@@ -11,25 +12,33 @@ const t = useTranslations(lang);
   description="Agilion helps Canadian and American businesses accelerate their digital transformation. Custom software development, AWS/Azure/GCP cloud, cybersecurity, and IT consulting."
   lang={lang}
 >
-  <!-- Hero placeholder -->
-  <section class="bg-primary text-white py-24 md:py-36">
-    <div class="container-site text-center">
-      <h1 class="text-4xl md:text-6xl font-bold mb-6 text-balance">
+  <!-- ===================== HERO ===================== -->
+  <section class="relative min-h-[85vh] flex items-center overflow-hidden bg-primary">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary via-primary to-primary-light opacity-90" aria-hidden="true"></div>
+    <div class="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-primary-light/10 blur-3xl" aria-hidden="true"></div>
+    <div class="absolute bottom-1/4 left-1/4 w-64 h-64 rounded-full bg-accent/10 blur-2xl" aria-hidden="true"></div>
+
+    <div class="relative container-site py-24 md:py-32 text-center">
+      <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/90 text-sm font-medium px-4 py-2 rounded-full mb-8">
+        <span class="w-2 h-2 rounded-full bg-accent animate-pulse" aria-hidden="true"></span>
+        {t('trustbar.since')} · {t('trustbar.projects')}
+      </div>
+      <h1 class="text-4xl md:text-6xl font-bold mb-6 text-white text-balance leading-tight">
         {t('hero.title')}
       </h1>
-      <p class="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-10">
+      <p class="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-10 leading-relaxed">
         {t('hero.subtitle')}
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a
           href="/en/contact"
-          class="px-8 py-4 bg-accent text-white font-semibold rounded-lg hover:bg-amber-500 transition-colors text-lg"
+          class="px-8 py-4 bg-accent text-white font-semibold rounded-lg hover:bg-amber-500 active:scale-95 transition-all duration-150 text-lg shadow-lg shadow-accent/30"
         >
           {t('hero.cta.primary')}
         </a>
         <a
           href="/en/services"
-          class="px-8 py-4 bg-white/10 text-white font-semibold rounded-lg hover:bg-white/20 transition-colors text-lg border border-white/30"
+          class="px-8 py-4 bg-white/10 text-white font-semibold rounded-lg hover:bg-white/20 active:scale-95 transition-all duration-150 text-lg border border-white/30"
         >
           {t('hero.cta.secondary')}
         </a>
@@ -37,11 +46,133 @@ const t = useTranslations(lang);
     </div>
   </section>
 
-  <!-- Services placeholder -->
-  <section class="py-20 bg-surface">
+  <!-- ===================== TRUST BAR ===================== -->
+  <section class="bg-gray-50 border-y border-gray-200 py-8" aria-label="Key figures">
+    <div class="container-site">
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 text-center">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl font-bold text-primary">2015</span>
+          <span class="text-gray-600">{t('trustbar.since')}</span>
+        </div>
+        <div class="hidden sm:block w-px h-8 bg-gray-300" aria-hidden="true"></div>
+        <div class="flex items-center gap-3">
+          <span class="text-2xl font-bold text-primary">50+</span>
+          <span class="text-gray-600">{t('trustbar.projects')}</span>
+        </div>
+        <div class="hidden sm:block w-px h-8 bg-gray-300" aria-hidden="true"></div>
+        <div class="flex items-center gap-3">
+          <span class="text-gray-600">{t('trustbar.clients')}</span>
+        </div>
+        <div class="hidden sm:block w-px h-8 bg-gray-300" aria-hidden="true"></div>
+        <div class="flex items-center gap-4">
+          <span class="px-3 py-1 bg-white border border-gray-200 rounded-full text-xs font-semibold text-gray-600 shadow-sm">AWS</span>
+          <span class="px-3 py-1 bg-white border border-gray-200 rounded-full text-xs font-semibold text-gray-600 shadow-sm">Azure</span>
+          <span class="px-3 py-1 bg-white border border-gray-200 rounded-full text-xs font-semibold text-gray-600 shadow-sm">GCP</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SERVICES GRID ===================== -->
+  <ServicesGrid lang={lang} />
+
+  <!-- ===================== WHY AGILION ===================== -->
+  <section class="py-20 bg-white" aria-labelledby="why-heading">
+    <div class="container-site">
+      <div class="text-center mb-14">
+        <h2 id="why-heading" class="text-3xl md:text-4xl font-bold text-primary mb-4">
+          {t('why.title')}
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center px-6">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/5 text-primary-light mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-primary mb-3">{t('why.local.title')}</h3>
+          <p class="text-gray-600 leading-relaxed">{t('why.local.desc')}</p>
+        </div>
+        <div class="text-center px-6">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/5 text-primary-light mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-primary mb-3">{t('why.agile.title')}</h3>
+          <p class="text-gray-600 leading-relaxed">{t('why.agile.desc')}</p>
+        </div>
+        <div class="text-center px-6">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/5 text-primary-light mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-primary mb-3">{t('why.partner.title')}</h3>
+          <p class="text-gray-600 leading-relaxed">{t('why.partner.desc')}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIALS ===================== -->
+  <section class="py-20 bg-surface" aria-labelledby="testimonials-heading">
+    <div class="container-site">
+      <div class="text-center mb-12">
+        <h2 id="testimonials-heading" class="text-3xl font-bold text-primary mb-4">
+          {t('testimonials.title')}
+        </h2>
+      </div>
+      {/* TODO: Remplacer par vrais témoignages */}
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <blockquote class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <p class="text-gray-700 italic leading-relaxed mb-4">
+            "Agilion transformed our data management in just a few weeks. Their team is responsive, professional, and truly listens to our needs."
+          </p>
+          <footer>
+            <cite class="not-italic">
+              <span class="font-semibold text-primary">Mary T.</span>
+              <span class="text-gray-500 text-sm">, Director, Quebec SME</span>
+            </cite>
+          </footer>
+        </blockquote>
+        <blockquote class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <p class="text-gray-700 italic leading-relaxed mb-4">
+            "The cloud migration they completed reduced our costs by 40% while improving our availability. A trusted long-term partner."
+          </p>
+          <footer>
+            <cite class="not-italic">
+              <span class="font-semibold text-primary">Jean-François B.</span>
+              <span class="text-gray-500 text-sm">, CTO, Manufacturing Company</span>
+            </cite>
+          </footer>
+        </blockquote>
+        <blockquote class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+          <p class="text-gray-700 italic leading-relaxed mb-4">
+            "Our client portal delivered in 8 weeks, perfectly adapted to our processes. I recommend Agilion to any company looking for concrete results."
+          </p>
+          <footer>
+            <cite class="not-italic">
+              <span class="font-semibold text-primary">Sophie L.</span>
+              <span class="text-gray-500 text-sm">, VP Operations, Services Firm</span>
+            </cite>
+          </footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA FINAL ===================== -->
+  <section class="py-20 bg-primary" aria-labelledby="cta-heading">
     <div class="container-site text-center">
-      <h2 class="text-3xl md:text-4xl font-bold text-primary mb-4">{t('services.title')}</h2>
-      <p class="text-gray-600 max-w-xl mx-auto">{t('services.subtitle')}</p>
+      <h2 id="cta-heading" class="text-3xl md:text-4xl font-bold text-white mb-4">
+        {t('cta.title')}
+      </h2>
+      <p class="text-white/80 text-lg mb-10 max-w-xl mx-auto">
+        {t('cta.subtitle')}
+      </p>
+      <a
+        href="/en/contact"
+        class="inline-flex items-center gap-2 px-10 py-4 bg-accent text-white font-bold text-lg rounded-lg hover:bg-amber-500 active:scale-95 transition-all duration-150 shadow-lg shadow-accent/30"
+      >
+        {t('cta.button')}
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
     </div>
   </section>
 </BaseLayout>

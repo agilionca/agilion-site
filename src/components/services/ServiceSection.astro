@@ -1,0 +1,78 @@
+---
+import type { Lang } from '@i18n/index';
+
+interface Props {
+  id: string;
+  icon: string; // SVG inline string
+  title: string;
+  description: string;
+  bullets: string[];
+  ctaText: string;
+  ctaHref: string;
+  reversed?: boolean;
+  lang: Lang;
+}
+
+const {
+  id,
+  icon,
+  title,
+  description,
+  bullets,
+  ctaText,
+  ctaHref,
+  reversed = false,
+} = Astro.props;
+---
+
+<section id={id} class="py-20 scroll-mt-20" aria-labelledby={`${id}-heading`}>
+  <div class="container-site">
+    <div class={`flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-16 ${reversed ? 'lg:flex-row-reverse' : ''}`}>
+      <!-- Icon column -->
+      <div class="flex-shrink-0 flex justify-center lg:w-64">
+        <div class="w-32 h-32 rounded-2xl bg-primary/5 flex items-center justify-center text-primary-light">
+          <Fragment set:html={icon} />
+        </div>
+      </div>
+
+      <!-- Content column -->
+      <div class="flex-1">
+        <h2 id={`${id}-heading`} class="text-2xl md:text-3xl font-bold text-primary mb-4">
+          {title}
+        </h2>
+        <p class="text-gray-600 leading-relaxed mb-6 text-lg">
+          {description}
+        </p>
+        <ul class="space-y-3 mb-8" role="list">
+          {bullets.map((bullet) => (
+            <li class="flex items-start gap-3">
+              <svg
+                class="flex-shrink-0 mt-0.5 text-primary-light"
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span class="text-gray-700">{bullet}</span>
+            </li>
+          ))}
+        </ul>
+        <a
+          href={ctaHref}
+          class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        >
+          {ctaText}
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

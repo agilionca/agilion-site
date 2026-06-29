@@ -1,0 +1,168 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { useTranslations } from '@i18n/index';
+
+const lang = 'fr' as const;
+const t = useTranslations(lang);
+
+const values = [
+  {
+    titleKey: 'about.values.excellence.title' as const,
+    descKey: 'about.values.excellence.desc' as const,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+  },
+  {
+    titleKey: 'about.values.transparency.title' as const,
+    descKey: 'about.values.transparency.desc' as const,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
+  },
+  {
+    titleKey: 'about.values.agility.title' as const,
+    descKey: 'about.values.agility.desc' as const,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+  },
+  {
+    titleKey: 'about.values.partnership.title' as const,
+    descKey: 'about.values.partnership.desc' as const,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  },
+];
+
+const steps = [
+  { titleKey: 'about.approach.step1.title' as const, descKey: 'about.approach.step1.desc' as const, num: '01' },
+  { titleKey: 'about.approach.step2.title' as const, descKey: 'about.approach.step2.desc' as const, num: '02' },
+  { titleKey: 'about.approach.step3.title' as const, descKey: 'about.approach.step3.desc' as const, num: '03' },
+  { titleKey: 'about.approach.step4.title' as const, descKey: 'about.approach.step4.desc' as const, num: '04' },
+];
+---
+
+<BaseLayout
+  title="À propos d'Agilion — Firme TI québécoise depuis 2015"
+  description="Découvrez Agilion : notre mission, nos valeurs, notre équipe et notre approche de la transformation numérique. Partenaire TI de confiance pour les PME canadiennes et américaines."
+  lang={lang}
+>
+  <!-- Hero compact -->
+  <section class="h-64 bg-primary flex items-center" aria-labelledby="about-hero-heading">
+    <div class="container-site">
+      <h1 id="about-hero-heading" class="text-4xl md:text-5xl font-bold text-white mb-3">
+        {t('about.mission.title')}
+      </h1>
+      <p class="text-white/80 text-lg max-w-xl">
+        {t('about.hero.subtitle')}
+      </p>
+    </div>
+  </section>
+
+  <!-- Mission -->
+  <section class="py-20 bg-white" aria-labelledby="mission-heading">
+    <div class="container-site max-w-3xl">
+      <h2 id="mission-heading" class="text-3xl font-bold text-primary mb-6">
+        {t('about.mission.title')}
+      </h2>
+      <p class="text-gray-700 text-lg leading-relaxed mb-6">
+        {t('about.mission')}
+      </p>
+      <p class="text-gray-700 text-lg leading-relaxed">
+        {t('about.mission.p2')}
+      </p>
+    </div>
+  </section>
+
+  <!-- Valeurs -->
+  <section class="py-20 bg-surface" aria-labelledby="values-heading">
+    <div class="container-site">
+      <div class="text-center mb-14">
+        <h2 id="values-heading" class="text-3xl md:text-4xl font-bold text-primary mb-4">
+          {t('about.values.title')}
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {values.map(({ titleKey, descKey, icon }) => (
+          <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/5 text-primary-light mb-4">
+              <Fragment set:html={icon} />
+            </div>
+            <h3 class="text-lg font-bold text-primary mb-2">{t(titleKey)}</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">{t(descKey)}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Équipe placeholder -->
+  <section class="py-20 bg-white" aria-labelledby="team-heading">
+    <div class="container-site">
+      <div class="text-center mb-12">
+        <h2 id="team-heading" class="text-3xl font-bold text-primary mb-4">
+          {t('about.team')}
+        </h2>
+        <p class="text-gray-600 text-lg max-w-xl mx-auto">
+          {t('about.team.subtitle')}
+        </p>
+      </div>
+      {/* TODO: Ajouter photos et bios réelles de l'équipe */}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="text-center">
+          <div class="w-32 h-32 rounded-full bg-gray-200 mx-auto mb-4 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <h3 class="font-bold text-primary text-lg">Alexandre D.</h3>
+          <p class="text-gray-500 text-sm">Fondateur & Directeur technologique</p>
+        </div>
+        <div class="text-center">
+          <div class="w-32 h-32 rounded-full bg-gray-200 mx-auto mb-4 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <h3 class="font-bold text-primary text-lg">Nathalie R.</h3>
+          <p class="text-gray-500 text-sm">Directrice des opérations</p>
+        </div>
+        <div class="text-center">
+          <div class="w-32 h-32 rounded-full bg-gray-200 mx-auto mb-4 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <h3 class="font-bold text-primary text-lg">Marc-André P.</h3>
+          <p class="text-gray-500 text-sm">Architecte solutions cloud</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Notre approche — timeline -->
+  <section class="py-20 bg-surface" aria-labelledby="approach-heading">
+    <div class="container-site">
+      <div class="text-center mb-14">
+        <h2 id="approach-heading" class="text-3xl md:text-4xl font-bold text-primary mb-4">
+          {t('about.approach.title')}
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {steps.map(({ titleKey, descKey, num }) => (
+          <div class="relative bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div class="text-5xl font-black text-primary/10 mb-4 leading-none">{num}</div>
+            <h3 class="text-lg font-bold text-primary mb-2">{t(titleKey)}</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">{t(descKey)}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 bg-primary" aria-labelledby="about-cta-heading">
+    <div class="container-site text-center">
+      <h2 id="about-cta-heading" class="text-3xl font-bold text-white mb-4">
+        {t('cta.title')}
+      </h2>
+      <p class="text-white/80 text-lg mb-8 max-w-lg mx-auto">
+        {t('cta.subtitle')}
+      </p>
+      <a
+        href="/contact"
+        class="inline-flex items-center gap-2 px-10 py-4 bg-accent text-white font-bold text-lg rounded-lg hover:bg-amber-500 active:scale-95 transition-all duration-150 shadow-lg shadow-accent/30"
+      >
+        {t('cta.button')}
+      </a>
+    </div>
+  </section>
+</BaseLayout>
