@@ -1,0 +1,110 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  slug: string;
+  pubDate: Date;
+  tags: string[];
+  category: string;
+  readingTime?: number;
+  image?: string;
+  lang: 'fr' | 'en';
+}
+
+const { title, description, slug, pubDate, tags, category, readingTime, image, lang } = Astro.props;
+
+const categoryColors: Record<string, { bg: string; text: string; gradient: string }> = {
+  cloud:        { bg: 'bg-blue-100',   text: 'text-blue-800',   gradient: 'from-blue-400 to-blue-600' },
+  securite:     { bg: 'bg-red-100',    text: 'text-red-800',    gradient: 'from-red-400 to-red-600' },
+  logiciel:     { bg: 'bg-green-100',  text: 'text-green-800',  gradient: 'from-green-400 to-green-600' },
+  web:          { bg: 'bg-purple-100', text: 'text-purple-800', gradient: 'from-purple-400 to-purple-600' },
+  consultation: { bg: 'bg-amber-100',  text: 'text-amber-800',  gradient: 'from-amber-400 to-amber-600' },
+  ia:           { bg: 'bg-teal-100',   text: 'text-teal-800',   gradient: 'from-teal-400 to-teal-600' },
+};
+
+const colors = categoryColors[category] ?? categoryColors['cloud'];
+
+const formattedDate = pubDate.toLocaleDateString(lang === 'fr' ? 'fr-CA' : 'en-CA', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const basePath = lang === 'fr' ? '/blogue' : '/en/blog';
+const articlePath = `${basePath}/${slug}`;
+
+const categoryLabel: Record<string, { fr: string; en: string }> = {
+  cloud:        { fr: 'Cloud',         en: 'Cloud' },
+  securite:     { fr: 'Cybersécurité', en: 'Cybersecurity' },
+  logiciel:     { fr: 'Logiciel',      en: 'Software' },
+  web:          { fr: 'Web',           en: 'Web' },
+  consultation: { fr: 'Consultation',  en: 'Consulting' },
+  ia:           { fr: 'IA',            en: 'AI' },
+};
+
+const catLabel = categoryLabel[category]?.[lang] ?? category;
+const readLabel = lang === 'fr' ? 'min de lecture' : 'min read';
+const readMore = lang === 'fr' ? 'Lire l\'article →' : 'Read article →';
+---
+
+<article class="group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col">
+  <!-- Image or gradient placeholder -->
+  <a href={articlePath} class="block aspect-[16/9] overflow-hidden flex-shrink-0">
+    {image ? (
+      <img
+        src={image}
+        alt={title}
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        loading="lazy"
+        decoding="async"
+      />
+    ) : (
+      <div class={`w-full h-full bg-gradient-to-br ${colors.gradient} flex items-center justify-center`}>
+        <span class="text-white/80 text-sm font-medium uppercase tracking-widest">{catLabel}</span>
+      </div>
+    )}
+  </a>
+
+  <!-- Content -->
+  <div class="flex flex-col flex-1 p-6">
+    <!-- Category badge + reading time -->
+    <div class="flex items-center gap-2 mb-3">
+      <span class={`inline-block text-xs font-semibold px-2.5 py-1 rounded-full ${colors.bg} ${colors.text}`}>
+        {catLabel}
+      </span>
+      {readingTime && (
+        <span class="text-xs text-gray-400">{readingTime} {readLabel}</span>
+      )}
+    </div>
+
+    <!-- Title -->
+    <h2 class="text-lg font-bold text-gray-900 mb-2 leading-snug group-hover:text-primary transition-colors">
+      <a href={articlePath} class="hover:underline">{title}</a>
+    </h2>
+
+    <!-- Description -->
+    <p class="text-sm text-gray-600 mb-4 flex-1 line-clamp-3">{description}</p>
+
+    <!-- Tags -->
+    {tags.length > 0 && (
+      <div class="flex flex-wrap gap-1.5 mb-4">
+        {tags.slice(0, 4).map((tag) => (
+          <span class="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">{tag}</span>
+        ))}
+      </div>
+    )}
+
+    <!-- Footer: date + read more -->
+    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+      <time datetime={pubDate.toISOString()} class="text-xs text-gray-400">
+        {formattedDate}
+      </time>
+      <a
+        href={articlePath}
+        class="text-sm font-semibold text-primary hover:text-primary-dark transition-colors"
+      >
+        {readMore}
+      </a>
+    </div>
+  </div>
+</article>

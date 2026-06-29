@@ -1,0 +1,108 @@
+---
+interface Props {
+  pubDate: Date;
+  updatedDate?: Date;
+  author: string;
+  readingTime?: number;
+  tags: string[];
+  lang: 'fr' | 'en';
+  translationSlug?: string;
+  category: string;
+}
+
+const { pubDate, updatedDate, author, readingTime, tags, lang, translationSlug, category } = Astro.props;
+
+const formattedPub = pubDate.toLocaleDateString(lang === 'fr' ? 'fr-CA' : 'en-CA', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const formattedUpd = updatedDate?.toLocaleDateString(lang === 'fr' ? 'fr-CA' : 'en-CA', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const labels = {
+  fr: {
+    published: 'Publié le',
+    updated: 'Mis à jour le',
+    by: 'Par',
+    read: 'min de lecture',
+    tags: 'Étiquettes',
+    translation: 'Read in English →',
+    translationPath: '/en/blog',
+  },
+  en: {
+    published: 'Published',
+    updated: 'Updated',
+    by: 'By',
+    read: 'min read',
+    tags: 'Tags',
+    translation: 'Lire en français →',
+    translationPath: '/blogue',
+  },
+};
+
+const l = labels[lang];
+const translationPath = translationSlug
+  ? `${l.translationPath}/${translationSlug}`
+  : null;
+---
+
+<div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-500 border-y border-gray-100 py-4 my-6">
+  <!-- Author -->
+  <span class="flex items-center gap-1.5">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+    </svg>
+    <span>{l.by} <strong class="text-gray-700 font-medium">{author}</strong></span>
+  </span>
+
+  <!-- Published date -->
+  <span class="flex items-center gap-1.5">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+    <time datetime={pubDate.toISOString()}>{l.published} {formattedPub}</time>
+  </span>
+
+  <!-- Updated date -->
+  {formattedUpd && (
+    <span class="flex items-center gap-1.5">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+      </svg>
+      <time datetime={updatedDate!.toISOString()}>{l.updated} {formattedUpd}</time>
+    </span>
+  )}
+
+  <!-- Reading time -->
+  {readingTime && (
+    <span class="flex items-center gap-1.5">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <span>{readingTime} {l.read}</span>
+    </span>
+  )}
+
+  <!-- Translation link -->
+  {translationPath && (
+    <a href={translationPath} class="ml-auto text-primary hover:text-primary-dark font-medium transition-colors">
+      {l.translation}
+    </a>
+  )}
+</div>
+
+<!-- Tags -->
+{tags.length > 0 && (
+  <div class="flex flex-wrap gap-2 mb-6">
+    {tags.map((tag) => (
+      <span class="text-xs font-medium bg-gray-100 text-gray-600 px-3 py-1 rounded-full">
+        #{tag}
+      </span>
+    ))}
+  </div>
+)}

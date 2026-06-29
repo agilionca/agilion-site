@@ -1,0 +1,167 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ArticleMeta from '@components/blog/ArticleMeta.astro';
+import { estimateReadingTime } from '@utils/reading-time';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('blog-fr', (e) => !e.data.draft);
+  const sorted = articles.sort(
+    (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+  );
+  return sorted.map((article, index) => ({
+    params: { slug: article.id },
+    props: {
+      article,
+      prev: sorted[index + 1] ?? null,
+      next: sorted[index - 1] ?? null,
+    },
+  }));
+}
+
+interface Props {
+  article: CollectionEntry<'blog-fr'>;
+  prev: CollectionEntry<'blog-fr'> | null;
+  next: CollectionEntry<'blog-fr'> | null;
+}
+
+const { article, prev, next } = Astro.props;
+const { Content } = await render(article);
+const { title, description, pubDate, updatedDate, author, tags, category, readingTime, image, translationSlug } = article.data;
+
+const lang = 'fr' as const;
+const computedReadingTime = readingTime ?? estimateReadingTime(article.body ?? '');
+const canonicalURL = new URL(`/blogue/${article.id}`, Astro.site).toString();
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  lang={lang}
+  canonicalURL={canonicalURL}
+  ogImage={image}
+  ogType="article"
+  publishedDate={pubDate.toISOString()}
+  modifiedDate={updatedDate?.toISOString()}
+  articleTags={tags}
+  alternateSlug={translationSlug ? `/en/blog/${translationSlug}` : undefined}
+>
+  <article class="container-site py-12 max-w-3xl mx-auto">
+    <!-- Back link -->
+    <a href="/blogue" class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-primary transition-colors mb-8">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Retour au blogue
+    </a>
+
+    <!-- Article header -->
+    <header class="mb-8">
+      <!-- Category -->
+      <div class="mb-4">
+        <span class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-3 py-1 rounded-full">
+          {category}
+        </span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight text-balance">
+        {title}
+      </h1>
+
+      <!-- Description lead -->
+      <p class="text-lg text-gray-600 leading-relaxed">{description}</p>
+
+      <!-- Meta -->
+      <ArticleMeta
+        pubDate={pubDate}
+        updatedDate={updatedDate}
+        author={author}
+        readingTime={computedReadingTime}
+        tags={tags}
+        lang={lang}
+        translationSlug={translationSlug}
+        category={category}
+      />
+    </header>
+
+    <!-- Featured image -->
+    {image && (
+      <figure class="mb-10 rounded-2xl overflow-hidden">
+        <img
+          src={image}
+          alt={title}
+          class="w-full object-cover"
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
+    )}
+
+    <!-- Article content -->
+    <div class="prose prose-gray prose-lg max-w-none
+      prose-headings:font-bold prose-headings:text-gray-900
+      prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
+      prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+      prose-p:text-gray-700 prose-p:leading-relaxed
+      prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+      prose-strong:text-gray-900
+      prose-ul:my-4 prose-li:my-1
+      prose-blockquote:border-primary prose-blockquote:text-gray-600">
+      <Content />
+    </div>
+
+    <!-- CTA fin d'article -->
+    <div class="mt-16 p-8 bg-primary/5 border border-primary/20 rounded-2xl text-center">
+      <h2 class="text-xl font-bold text-gray-900 mb-2">Besoin d'expertise TI ?</h2>
+      <p class="text-gray-600 mb-6">
+        Notre équipe accompagne les PME québécoises dans leur transformation numérique.
+        Discutons de vos besoins.
+      </p>
+      <a
+        href="/contact"
+        class="inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-3 rounded-xl hover:bg-primary-dark transition-colors"
+      >
+        Parlons-en →
+      </a>
+    </div>
+
+    <!-- Prev / Next navigation -->
+    {(prev || next) && (
+      <nav class="mt-12 pt-8 border-t border-gray-100 grid grid-cols-1 sm:grid-cols-2 gap-4" aria-label="Navigation entre articles">
+        {prev && (
+          <a
+            href={`/blogue/${prev.id}`}
+            class="group flex flex-col gap-1 p-4 rounded-xl border border-gray-100 hover:border-primary/30 hover:bg-primary/5 transition-all"
+          >
+            <span class="text-xs text-gray-400 flex items-center gap-1">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+              Article précédent
+            </span>
+            <span class="text-sm font-semibold text-gray-700 group-hover:text-primary transition-colors line-clamp-2">
+              {prev.data.title}
+            </span>
+          </a>
+        )}
+        {next && (
+          <a
+            href={`/blogue/${next.id}`}
+            class={`group flex flex-col gap-1 p-4 rounded-xl border border-gray-100 hover:border-primary/30 hover:bg-primary/5 transition-all ${!prev ? 'sm:col-start-2' : ''}`}
+          >
+            <span class="text-xs text-gray-400 flex items-center gap-1 justify-end">
+              Article suivant
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </span>
+            <span class="text-sm font-semibold text-gray-700 group-hover:text-primary transition-colors line-clamp-2 text-right">
+              {next.data.title}
+            </span>
+          </a>
+        )}
+      </nav>
+    )}
+  </article>
+</BaseLayout>

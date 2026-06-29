@@ -1,0 +1,87 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ArticleCard from '@components/blog/ArticleCard.astro';
+import { estimateReadingTime } from '@utils/reading-time';
+
+const lang = 'en' as const;
+
+const allArticles = await getCollection('blog-en', (e) => !e.data.draft);
+const articles = allArticles.sort(
+  (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
+---
+
+<BaseLayout
+  title="Agilion Blog — IT Insights, Cloud & Cybersecurity"
+  description="Expert advice, analysis and news on cloud, cybersecurity, software development and digital transformation for Canadian and American businesses."
+  lang={lang}
+  alternateSlug="/blogue"
+>
+  <!-- Header -->
+  <section class="bg-primary text-white py-16 md:py-24">
+    <div class="container-site text-center">
+      <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/90 text-sm font-medium px-4 py-2 rounded-full mb-6">
+        <span class="w-2 h-2 rounded-full bg-accent animate-pulse" aria-hidden="true"></span>
+        Quebec IT Expertise
+      </div>
+      <h1 class="text-3xl md:text-5xl font-bold mb-4 text-balance">
+        Agilion Blog
+      </h1>
+      <p class="text-lg text-white/80 max-w-2xl mx-auto">
+        Practical insights, analysis and news on cloud, cybersecurity,
+        software development and digital transformation for SMBs.
+      </p>
+    </div>
+  </section>
+
+  <!-- Articles grid -->
+  <section class="container-site py-16">
+    {articles.length === 0 ? (
+      <p class="text-center text-gray-500 py-16">No articles yet. Check back soon!</p>
+    ) : (
+      <>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {articles.map((article) => (
+            <ArticleCard
+              title={article.data.title}
+              description={article.data.description}
+              slug={article.id}
+              pubDate={article.data.pubDate}
+              tags={article.data.tags}
+              category={article.data.category}
+              readingTime={article.data.readingTime ?? estimateReadingTime(article.body ?? '')}
+              image={article.data.image}
+              lang={lang}
+            />
+          ))}
+        </div>
+
+        {articles.length > 10 && (
+          <p class="text-center text-gray-400 mt-12 text-sm">
+            Pagination coming soon — {articles.length} articles available
+          </p>
+        )}
+      </>
+    )}
+  </section>
+
+  <!-- CTA section -->
+  <section class="bg-gray-50 border-t border-gray-100 py-16">
+    <div class="container-site text-center">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">
+        Need IT expertise for your business?
+      </h2>
+      <p class="text-gray-600 mb-8 max-w-xl mx-auto">
+        Our experts guide SMBs through their digital transformation.
+        Let's discuss your challenges.
+      </p>
+      <a
+        href="/en/contact"
+        class="inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-3 rounded-xl hover:bg-primary-dark transition-colors"
+      >
+        Talk to an expert →
+      </a>
+    </div>
+  </section>
+</BaseLayout>

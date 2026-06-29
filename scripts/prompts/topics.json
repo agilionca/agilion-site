@@ -1,0 +1,164 @@
+{
+  "topics": [
+    {
+      "id": "custom-software-roi",
+      "titleFR": "Calculer le ROI d'un logiciel sur mesure vs un SaaS",
+      "titleEN": "Custom Software vs SaaS: How to Calculate Real ROI",
+      "category": "logiciel",
+      "keywords": ["logiciel sur mesure", "ROI", "SaaS", "développement", "coût total de possession"],
+      "targetAudience": "PME, directeurs TI, propriétaires d'entreprise"
+    },
+    {
+      "id": "kubernetes-for-smb",
+      "titleFR": "Kubernetes pour les PME : avantages, risques et alternatives",
+      "titleEN": "Kubernetes for SMBs: Benefits, Risks and When to Use Alternatives",
+      "category": "cloud",
+      "keywords": ["Kubernetes", "conteneurs", "Docker", "orchestration", "cloud"],
+      "targetAudience": "équipes de développement, directeurs TI"
+    },
+    {
+      "id": "api-integration-strategy",
+      "titleFR": "Stratégie d'intégration API : comment connecter vos outils sans chaos",
+      "titleEN": "API Integration Strategy: How to Connect Your Tools Without Creating Chaos",
+      "category": "logiciel",
+      "keywords": ["API", "intégration", "REST", "webhooks", "automatisation"],
+      "targetAudience": "directeurs TI, développeurs, gestionnaires de projets"
+    },
+    {
+      "id": "zero-trust-security",
+      "titleFR": "Le modèle Zero Trust : la cybersécurité pour l'ère du télétravail",
+      "titleEN": "Zero Trust Security: The Modern Framework for the Remote Work Era",
+      "category": "securite",
+      "keywords": ["zero trust", "cybersécurité", "télétravail", "accès réseau", "identité"],
+      "targetAudience": "directeurs TI, responsables sécurité, PME"
+    },
+    {
+      "id": "web-performance-seo",
+      "titleFR": "Core Web Vitals en 2026 : comment la performance web impacte votre SEO",
+      "titleEN": "Core Web Vitals in 2026: How Web Performance Directly Impacts Your SEO",
+      "category": "web",
+      "keywords": ["Core Web Vitals", "SEO", "performance", "LCP", "CLS", "Google"],
+      "targetAudience": "responsables marketing, équipes web, propriétaires de site"
+    },
+    {
+      "id": "digital-transformation-roadmap",
+      "titleFR": "Créer une feuille de route de transformation numérique réaliste pour une PME",
+      "titleEN": "Building a Realistic Digital Transformation Roadmap for Your SMB",
+      "category": "consultation",
+      "keywords": ["transformation numérique", "feuille de route", "stratégie TI", "PME", "priorisation"],
+      "targetAudience": "dirigeants, propriétaires d'entreprise, directeurs généraux"
+    },
+    {
+      "id": "ai-business-automation",
+      "titleFR": "IA générative en entreprise : cas d'usage concrets pour les PME en 2026",
+      "titleEN": "Generative AI for Business: Practical Use Cases for SMBs in 2026",
+      "category": "ia",
+      "keywords": ["IA générative", "ChatGPT", "automatisation", "productivité", "PME"],
+      "targetAudience": "dirigeants, équipes opérationnelles, responsables TI"
+    },
+    {
+      "id": "devops-practices-smb",
+      "titleFR": "DevOps pour les PME : par où commencer sans une grande équipe",
+      "titleEN": "DevOps for SMBs: Where to Start When You Don't Have a Large Team",
+      "category": "logiciel",
+      "keywords": ["DevOps", "CI/CD", "GitHub Actions", "automatisation", "déploiement"],
+      "targetAudience": "équipes de développement, directeurs TI, CTO"
+    },
+    {
+      "id": "multi-cloud-strategy",
+      "titleFR": "Stratégie multi-cloud : quand et pourquoi répartir entre AWS, Azure et GCP",
+      "titleEN": "Multi-Cloud Strategy: When and Why to Spread Across AWS, Azure and GCP",
+      "category": "cloud",
+      "keywords": ["multi-cloud", "AWS", "Azure", "GCP", "résilience", "vendor lock-in"],
+      "targetAudience": "directeurs TI, architectes cloud, CTO"
+    },
+    {
+      "id": "loi25-compliance-guide",
+      "titleFR": "Loi 25 au Québec : guide pratique de conformité pour les PME",
+      "titleEN": "Quebec Law 25 Compliance: A Practical Guide for Businesses",
+      "category": "securite",
+      "keywords": ["Loi 25", "conformité", "données personnelles", "protection vie privée", "Québec"],
+      "targetAudience": "dirigeants, responsables conformité, PME québécoises"
+    },
+    {
+      "id": "headless-cms-comparison",
+      "titleFR": "CMS headless vs traditionnel : lequel choisir pour votre site en 2026",
+      "titleEN": "Headless CMS vs Traditional CMS: Which One Should You Choose in 2026",
+      "category": "web",
+      "keywords": ["CMS headless", "Contentful", "Sanity", "WordPress", "JAMstack"],
+      "targetAudience": "équipes marketing, développeurs web, responsables TI"
+    },
+    {
+      "id": "it-vendor-selection",
+      "titleFR": "Comment choisir un fournisseur TI : les 7 critères essentiels",
+      "titleEN": "How to Choose an IT Partner: 7 Essential Criteria That Matter",
+      "category": "consultation",
+      "keywords": ["appel d'offres TI", "sélection fournisseur", "partenaire technologique", "PME"],
+      "targetAudience": "dirigeants, directeurs TI, responsables achats"
+    },
+    {
+      "id": "microservices-vs-monolith",
+      "titleFR": "Microservices vs monolithe : quelle architecture choisir pour votre projet",
+      "titleEN": "Microservices vs Monolith: Choosing the Right Architecture for Your Project",
+      "category": "logiciel",
+      "keywords": ["microservices", "architecture logicielle", "monolithe", "scalabilité", "API"],
+      "targetAudience": "développeurs, architectes logiciels, CTO"
+    },
+    {
+      "id": "cloud-cost-optimization",
+      "titleFR": "Réduire sa facture cloud de 30 % : stratégies concrètes pour les PME",
+      "titleEN": "Cut Your Cloud Bill by 30%: Proven Strategies for SMBs",
+      "category": "cloud",
+      "keywords": ["optimisation cloud", "coûts AWS", "FinOps", "réservations", "rightsizing"],
+      "targetAudience": "directeurs TI, CFO, responsables cloud"
+    },
+    {
+      "id": "mobile-app-vs-pwa",
+      "titleFR": "Application mobile native vs PWA : comment faire le bon choix en 2026",
+      "titleEN": "Native Mobile App vs PWA: How to Make the Right Choice in 2026",
+      "category": "web",
+      "keywords": ["PWA", "application mobile", "React Native", "Flutter", "iOS", "Android"],
+      "targetAudience": "propriétaires d'entreprise, chefs de produit, directeurs marketing"
+    },
+    {
+      "id": "backup-disaster-recovery",
+      "titleFR": "Plan de reprise d'activité : comment protéger votre PME contre les catastrophes",
+      "titleEN": "Disaster Recovery Planning: How to Protect Your Business Against the Unexpected",
+      "category": "securite",
+      "keywords": ["reprise d'activité", "sauvegarde", "RTO", "RPO", "continuité des affaires"],
+      "targetAudience": "dirigeants, directeurs TI, responsables opérations"
+    },
+    {
+      "id": "ai-code-review",
+      "titleFR": "L'IA dans le cycle de développement logiciel : gains réels et limites",
+      "titleEN": "AI in the Software Development Lifecycle: Real Gains and Real Limitations",
+      "category": "ia",
+      "keywords": ["IA développement", "GitHub Copilot", "code review", "productivité dev", "qualité code"],
+      "targetAudience": "équipes de développement, CTO, directeurs TI"
+    },
+    {
+      "id": "erp-selection-smb",
+      "titleFR": "Choisir un ERP pour votre PME : éviter les 6 erreurs les plus coûteuses",
+      "titleEN": "Choosing an ERP for Your SMB: Avoiding the 6 Most Expensive Mistakes",
+      "category": "consultation",
+      "keywords": ["ERP", "sélection logiciel", "SAP", "Microsoft Dynamics", "implémentation"],
+      "targetAudience": "dirigeants, directeurs opérations, responsables TI"
+    },
+    {
+      "id": "web-accessibility-roi",
+      "titleFR": "Accessibilité web en 2026 : obligation légale et opportunité d'affaires",
+      "titleEN": "Web Accessibility in 2026: Legal Requirement and Business Opportunity",
+      "category": "web",
+      "keywords": ["accessibilité web", "WCAG", "ADA", "AODA", "inclusion numérique"],
+      "targetAudience": "responsables marketing, équipes web, directeurs TI"
+    },
+    {
+      "id": "llm-enterprise-integration",
+      "titleFR": "Intégrer un LLM dans vos processus d'affaires : guide pratique pour les PME",
+      "titleEN": "Integrating LLMs into Your Business Processes: A Practical Guide for SMBs",
+      "category": "ia",
+      "keywords": ["LLM", "GPT", "Claude", "automatisation", "RAG", "données d'entreprise"],
+      "targetAudience": "directeurs TI, CTO, propriétaires d'entreprise"
+    }
+  ]
+}
