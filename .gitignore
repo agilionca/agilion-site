@@ -16,6 +16,16 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+.env.local
+.env.*.local
+
+# sensitive config (credentials — never commit)
+config.php
+
+# vendor — except PHPMailer (needed for FTP deploy)
+vendor/*
+!vendor/PHPMailer/
+!vendor/PHPMailer/*.php
 
 # macOS-specific files
 .DS_Store

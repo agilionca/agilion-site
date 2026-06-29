@@ -1,0 +1,48 @@
+---
+/**
+ * ObfuscatedContact — affiche un lien email ou tel sans PII en clair dans le HTML.
+ * Les valeurs sont passées en base64 et décodées côté client uniquement.
+ *
+ * Valeurs placeholder encodées :
+ *   email : btoa('info@agilion.ca')     = "aW5mb0BhZ2lsaW9uLmNh"
+ *   tel   : btoa('+1 (514) 000-0000')   = "KzEgKDUxNCkgMDAwLTAwMDA="
+ */
+
+interface Props {
+  type: 'email' | 'tel';
+  /** Valeur encodée en base64 — JAMAIS en clair */
+  encoded: string;
+  /** Texte affiché (peut différer de la valeur décodée) */
+  label?: string;
+  class?: string;
+}
+
+const { type, encoded, label, class: className = '' } = Astro.props;
+---
+
+<span
+  data-obf
+  data-e={encoded}
+  data-t={type}
+  data-label={label}
+  class={className}
+  aria-hidden="false"
+></span>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-obf]').forEach(el => {
+    try {
+      const val = atob(el.dataset.e ?? '');
+      const type = el.dataset.t ?? 'email';
+      const label = el.dataset.label;
+      const href =
+        type === 'email'
+          ? `mailto:${val}`
+          : `tel:${val.replace(/[\s()\-]/g, '')}`;
+      const display = label ?? val;
+      el.outerHTML = `<a href="${href}" class="${el.className}">${display}</a>`;
+    } catch (_) {
+      /* silently ignore decode errors */
+    }
+  });
+</script>

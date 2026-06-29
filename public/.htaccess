@@ -1,0 +1,63 @@
+# ============================================
+# Agilion.ca — .htaccess
+# ============================================
+
+# 1. HTTPS redirect (avant tout)
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 2. www -> non-www
+RewriteCond %{HTTP_HOST} ^www\.agilion\.ca [NC]
+RewriteRule ^(.*)$ https://agilion.ca/$1 [L,R=301]
+
+# 3. Proteger config.php (inaccessible en HTTP directement)
+<Files "config.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# 4. Proteger les fichiers sensibles
+<FilesMatch "\.(env|log|bak|sql|sh|py)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# 5. Headers de securite HTTP
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+    # CSP — adapter selon les ressources utilisees
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com;"
+</IfModule>
+
+# 6. Cache statique (assets Astro avec hash dans le nom)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/html "access plus 1 hour"
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/ico "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# 7. Gzip compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# 8. Astro SPA-like routing (404 -> pages custom)
+ErrorDocument 404 /404.html
+
+# 9. Bloquer les user agents malveillants courants
+<IfModule mod_rewrite.c>
+    RewriteCond %{HTTP_USER_AGENT} (semrushbot|dotbot|mj12bot|ahrefsbot|petalbot) [NC]
+    RewriteRule .* - [F,L]
+</IfModule>

@@ -1,0 +1,40 @@
+name: AI Blog Article Generation
+
+on:
+  schedule:
+    - cron: '0 9 1,15 * *'  # 1er et 15 du mois a 9h UTC
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: "Sujet de l'article (optionnel)"
+        required: false
+
+jobs:
+  generate-article:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate article (FR + EN)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TOPIC: ${{ inputs.topic || '' }}
+        run: npx tsx scripts/generate-article.ts
+
+      - name: Commit generated articles
+        run: |
+          git config user.name "agibot1[bot]"
+          git config user.email "agibot1[bot]@users.noreply.github.com"
+          git add src/content/
+          git diff --staged --quiet || git commit -m "feat(blog): article IA genere automatiquement [$(date +%Y-%m-%d)]"
+          git push

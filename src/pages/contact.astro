@@ -1,0 +1,121 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ContactForm from '@components/contact/ContactForm.astro';
+import ObfuscatedContact from '@components/contact/ObfuscatedContact.astro';
+import { useTranslations } from '@i18n/index';
+
+const lang = 'fr' as const;
+const t = useTranslations(lang);
+
+// Valeurs encodées en base64 — PII jamais en clair dans le HTML généré
+// btoa('info@agilion.ca') = 'aW5mb0BhZ2lsaW9uLmNh'
+// btoa('+1 (514) 000-0000') = 'KzEgKDUxNCkgMDAwLTAwMDA='
+const EMAIL_B64 = 'aW5mb0BhZ2lsaW9uLmNh';
+const TEL_B64 = 'KzEgKDUxNCkgMDAwLTAwMDA=';
+---
+
+<BaseLayout
+  title="Contact — Agilion | Firme TI québécoise"
+  description="Contactez l'équipe Agilion pour discuter de votre projet de transformation numérique. Réponse sous 24h ouvrables."
+  lang={lang}
+  alternateSlug="/en/contact"
+>
+  <!-- ===== HERO COMPACT ===== -->
+  <section class="relative h-48 flex items-center overflow-hidden bg-primary">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary via-primary to-primary-light opacity-90" aria-hidden="true"></div>
+    <div class="absolute top-0 right-1/4 w-64 h-64 rounded-full bg-primary-light/10 blur-3xl" aria-hidden="true"></div>
+    <div class="relative container-site text-center">
+      <h1 class="text-3xl md:text-4xl font-bold text-white">
+        {t('contact.hero.title')}
+      </h1>
+      <p class="mt-2 text-white/80">
+        {t('contact.hero.subtitle')}
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== CONTENT GRID ===== -->
+  <section class="container-site py-16">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+
+      <!-- GAUCHE : coordonnées + infos -->
+      <div class="space-y-8">
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">
+            {t('contact.info.title')}
+          </h2>
+          <p class="text-gray-600 leading-relaxed">
+            Que vous ayez un projet en tête, une question sur nos services ou simplement envie d'explorer comment Agilion peut vous accompagner, nous sommes là pour vous.
+          </p>
+        </div>
+
+        <!-- Coordonnées obfusquées -->
+        <div class="space-y-4">
+          <!-- Email -->
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-500 mb-0.5">Courriel</p>
+              <ObfuscatedContact
+                type="email"
+                encoded={EMAIL_B64}
+                class="text-primary hover:text-primary/80 font-medium transition-colors"
+              />
+            </div>
+          </div>
+
+          <!-- Téléphone -->
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-500 mb-0.5">Téléphone</p>
+              <ObfuscatedContact
+                type="tel"
+                encoded={TEL_B64}
+                class="text-primary hover:text-primary/80 font-medium transition-colors"
+              />
+            </div>
+          </div>
+
+          <!-- Heures d'ouverture -->
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-500 mb-0.5">{t('contact.info.hours')}</p>
+              <p class="text-gray-700">{t('contact.info.response')}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Encart accroche -->
+        <div class="bg-primary/5 border border-primary/15 rounded-xl p-6">
+          <h3 class="font-semibold text-gray-900 mb-2">Premier appel gratuit</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            Toute nouvelle relation commence par une conversation. Prenez contact sans engagement — nous prendrons le temps de comprendre votre réalité avant de vous proposer quoi que ce soit.
+          </p>
+        </div>
+      </div>
+
+      <!-- DROITE : formulaire -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+        <h2 class="text-xl font-bold text-gray-900 mb-6">
+          {lang === 'fr' ? 'Envoyer un message' : 'Send a message'}
+        </h2>
+        <ContactForm lang={lang} action="/api/contact.php" />
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>
