@@ -1,5 +1,35 @@
 @import "tailwindcss";
 
+/* ===== Inter self-hosted (latin subset) ===== */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   --color-primary: #1E3A5F;
   --color-primary-light: #2563EB;
@@ -17,14 +47,33 @@
 
   body {
     @apply bg-white text-gray-900 antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
   }
 
-  *:focus-visible {
-    @apply outline-2 outline-offset-2 outline-primary-light;
+  /* Focus visible global — WCAG 2.1 AA */
+  :focus-visible {
+    outline: 3px solid #2563EB;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  /* Supprimer outline sur clic souris (pas au clavier) */
+  :focus:not(:focus-visible) {
+    outline: none;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-semibold tracking-tight;
+  }
+
+  /* Éviter CLS */
+  img, video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Réserver l'espace pour les éléments dynamiques */
+  .hero {
+    min-height: 85svh;
   }
 }
 
@@ -35,5 +84,17 @@
 
   .container-site {
     @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* ===== Réduction des animations (prefers-reduced-motion) ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
   }
 }

@@ -115,8 +115,8 @@ const homeHref = lang === 'fr' ? '/' : '/en';
     </div>
   </div>
 
-  <!-- Mobile menu -->
-  <input type="checkbox" id="mobile-menu-toggle" class="peer sr-only" aria-hidden="true" />
+  <!-- Mobile menu — keyboard accessible: checkbox focusable, label has matching for -->
+  <input type="checkbox" id="mobile-menu-toggle" class="peer sr-only" aria-label={lang === 'fr' ? 'Ouvrir le menu de navigation' : 'Open navigation menu'} />
   <div
     class="md:hidden max-h-0 overflow-hidden peer-checked:max-h-screen transition-all duration-300 ease-in-out bg-primary border-t border-white/10"
   >

@@ -1,0 +1,125 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getLangFromUrl } from '@i18n/index';
+
+// Astro génère /404.html — la langue est détectée depuis l'URL courante
+const lang = getLangFromUrl(Astro.url);
+
+const content = {
+  fr: {
+    title: 'Page introuvable — Agilion',
+    description: 'La page que vous cherchez n\'existe pas ou a été déplacée.',
+    heading: 'Page introuvable',
+    message: 'Oups ! La page que vous cherchez n\'existe pas ou a été déplacée. Voici quelques liens pour vous aider.',
+    home: 'Retour à l\'accueil',
+    services: 'Nos services',
+    contact: 'Nous contacter',
+    homeHref: '/',
+    servicesHref: '/services',
+    contactHref: '/contact',
+  },
+  en: {
+    title: 'Page not found — Agilion',
+    description: 'The page you are looking for does not exist or has been moved.',
+    heading: 'Page not found',
+    message: 'Oops! The page you\'re looking for doesn\'t exist or has been moved. Here are some helpful links.',
+    home: 'Back to home',
+    services: 'Our services',
+    contact: 'Contact us',
+    homeHref: '/en',
+    servicesHref: '/en/services',
+    contactHref: '/en/contact',
+  },
+} as const;
+
+const c = content[lang];
+---
+
+<BaseLayout
+  title={c.title}
+  description={c.description}
+  lang={lang}
+  noindex={true}
+>
+  <section class="min-h-[70vh] flex items-center justify-center py-20 bg-surface">
+    <div class="container-site text-center max-w-2xl">
+
+      <!-- Illustration SVG -->
+      <div class="flex justify-center mb-10" aria-hidden="true">
+        <svg
+          width="200"
+          height="160"
+          viewBox="0 0 200 160"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          role="img"
+          aria-label="404"
+        >
+          <!-- Background circle -->
+          <circle cx="100" cy="80" r="70" fill="#EFF6FF" />
+          <!-- Broken path -->
+          <path
+            d="M60 110 L80 60 L100 90 L120 50 L140 110"
+            stroke="#1E3A5F"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-dasharray="8 4"
+          />
+          <!-- Question mark -->
+          <circle cx="100" cy="80" r="18" fill="#2563EB" />
+          <text
+            x="100"
+            y="87"
+            text-anchor="middle"
+            font-family="system-ui, sans-serif"
+            font-size="22"
+            font-weight="700"
+            fill="white"
+          >?</text>
+          <!-- 404 text -->
+          <text
+            x="100"
+            y="148"
+            text-anchor="middle"
+            font-family="system-ui, sans-serif"
+            font-size="28"
+            font-weight="800"
+            fill="#1E3A5F"
+            letter-spacing="-1"
+          >404</text>
+        </svg>
+      </div>
+
+      <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">
+        {c.heading}
+      </h1>
+      <p class="text-lg text-gray-600 mb-10 leading-relaxed max-w-lg mx-auto">
+        {c.message}
+      </p>
+
+      <!-- Navigation links -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href={c.homeHref}
+          class="px-8 py-4 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 active:scale-95 transition-all duration-150 text-base shadow-md"
+        >
+          {c.home}
+        </a>
+        <a
+          href={c.servicesHref}
+          class="px-8 py-4 bg-white text-primary font-semibold rounded-lg border border-gray-200 hover:bg-gray-50 active:scale-95 transition-all duration-150 text-base shadow-sm"
+        >
+          {c.services}
+        </a>
+        <a
+          href={c.contactHref}
+          class="px-8 py-4 bg-accent text-white font-semibold rounded-lg hover:bg-amber-500 active:scale-95 transition-all duration-150 text-base shadow-sm"
+        >
+          {c.contact}
+        </a>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>

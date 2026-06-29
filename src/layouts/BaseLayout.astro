@@ -83,13 +83,9 @@ const enURL = normalizeHref(new URL(enPath, Astro.site));
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Inter font from Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..700;1,14..32,300..400&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Inter self-hosted — preload weights used in LCP -->
+    <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- hreflang alternates -->
     <link rel="alternate" hreflang="fr-CA" href={frURL} />
