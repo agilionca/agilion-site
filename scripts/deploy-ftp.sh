@@ -3,7 +3,10 @@ set -e
 
 # Charge les secrets depuis .env.local
 if [ -f .env.local ]; then
-  export $(grep -v '^#' .env.local | xargs)
+  set -a
+  # shellcheck source=.env.local.example
+  source .env.local
+  set +a
 else
   echo "Fichier .env.local manquant (voir .env.local.example)"
   exit 1

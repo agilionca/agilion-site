@@ -22,6 +22,8 @@ jobs:
       - name: Build Astro
         run: npm run build
 
+      # Secrets requis dans GitHub Settings > Secrets > Actions :
+      # FTP_HOST, FTP_USER, FTP_PASS, FTP_REMOTE_DIR, FTP_VENDOR_DIR, ANTHROPIC_API_KEY
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -36,3 +38,14 @@ jobs:
             **/node_modules/**
           dangerous-clean-slate: false
           log-level: verbose
+
+      - name: Deploy vendor/PHPMailer (first time or on change)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          local-dir: ./vendor/
+          server-dir: ${{ secrets.FTP_VENDOR_DIR }}
+          dangerous-clean-slate: false
+          log-level: minimal

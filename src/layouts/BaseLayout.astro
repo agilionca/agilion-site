@@ -38,6 +38,13 @@ const currentPath = Astro.url.pathname;
 const siteName = 'Agilion';
 const fullTitle = title.includes(siteName) ? title : `${title} — ${siteName}`;
 
+// Helper — normalise le trailing slash pour les hreflang
+function normalizeHref(url: URL | string): string {
+  const u = typeof url === 'string' ? new URL(url, Astro.site) : url;
+  if (!u.pathname.endsWith('/')) u.pathname += '/';
+  return u.toString();
+}
+
 // hreflang URLs — utilise alternateSlug si fourni, sinon getAlternatePath
 const frPath = lang === 'fr'
   ? currentPath
@@ -45,8 +52,8 @@ const frPath = lang === 'fr'
 const enPath = lang === 'en'
   ? currentPath
   : (alternateSlug ?? getAlternatePath(currentPath, 'en'));
-const frURL = new URL(frPath, Astro.site).toString();
-const enURL = new URL(enPath, Astro.site).toString();
+const frURL = normalizeHref(new URL(frPath, Astro.site));
+const enURL = normalizeHref(new URL(enPath, Astro.site));
 ---
 
 <!doctype html>

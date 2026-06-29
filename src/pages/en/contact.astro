@@ -8,7 +8,7 @@ const lang = 'en' as const;
 const t = useTranslations(lang);
 
 // Base64-encoded PII — never in clear in static HTML
-// btoa('info@agilion.ca') = 'aW5mb0BhZ2xpb24uY2E='
+// btoa('info@agilion.ca') = 'aW5mb0BhZ2lsaW9uLmNh'
 // btoa('+1 (514) 000-0000') = 'KzEgKDUxNCkgMDAwLTAwMDA='
 const EMAIL_B64 = 'aW5mb0BhZ2lsaW9uLmNh';
 const TEL_B64 = 'KzEgKDUxNCkgMDAwLTAwMDA=';
@@ -101,7 +101,7 @@ const TEL_B64 = 'KzEgKDUxNCkgMDAwLTAwMDA=';
 
         <!-- Value prop callout -->
         <div class="bg-primary/5 border border-primary/15 rounded-xl p-6">
-          <h3 class="font-semibold text-gray-900 mb-2">Free first call</h3>
+          <h3 class="font-semibold text-gray-900 mb-2">{t('contact.info.cta')}</h3>
           <p class="text-gray-600 text-sm leading-relaxed">
             Every great relationship starts with a conversation. Reach out with no commitment — we'll take the time to understand your reality before proposing anything.
           </p>
@@ -110,7 +110,7 @@ const TEL_B64 = 'KzEgKDUxNCkgMDAwLTAwMDA=';
 
       <!-- RIGHT: form -->
       <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-        <h2 class="text-xl font-bold text-gray-900 mb-6">Send a message</h2>
+        <h2 class="text-xl font-bold text-gray-900 mb-6">{t('contact.form.section.title')}</h2>
         <ContactForm lang={lang} action="/api/contact.php" />
       </div>
 

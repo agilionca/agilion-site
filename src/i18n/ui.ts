@@ -164,6 +164,8 @@ export const ui = {
     'contact.error.title': 'Erreur d\'envoi',
     'contact.error.message': 'Une erreur s\'est produite. Veuillez réessayer ou nous écrire directement à info@agilion.ca.',
     'contact.honeypot': 'Ne pas remplir ce champ',
+    'contact.form.section.title': 'Envoyer un message',
+    'contact.info.cta': 'Premier appel gratuit, sans engagement.',
 
     // Blog
     'blog.title': 'Blogue',
@@ -348,6 +350,8 @@ export const ui = {
     'contact.error.title': 'Send Error',
     'contact.error.message': 'Something went wrong. Please try again or email us directly at info@agilion.ca.',
     'contact.honeypot': 'Do not fill this field',
+    'contact.form.section.title': 'Send a message',
+    'contact.info.cta': 'Free first call, no commitment.',
 
     // Blog
     'blog.title': 'Blog',

@@ -101,7 +101,7 @@ const TEL_B64 = 'KzEgKDUxNCkgMDAwLTAwMDA=';
 
         <!-- Encart accroche -->
         <div class="bg-primary/5 border border-primary/15 rounded-xl p-6">
-          <h3 class="font-semibold text-gray-900 mb-2">Premier appel gratuit</h3>
+          <h3 class="font-semibold text-gray-900 mb-2">{t('contact.info.cta')}</h3>
           <p class="text-gray-600 text-sm leading-relaxed">
             Toute nouvelle relation commence par une conversation. Prenez contact sans engagement — nous prendrons le temps de comprendre votre réalité avant de vous proposer quoi que ce soit.
           </p>
@@ -111,7 +111,7 @@ const TEL_B64 = 'KzEgKDUxNCkgMDAwLTAwMDA=';
       <!-- DROITE : formulaire -->
       <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 class="text-xl font-bold text-gray-900 mb-6">
-          {lang === 'fr' ? 'Envoyer un message' : 'Send a message'}
+          {t('contact.form.section.title')}
         </h2>
         <ContactForm lang={lang} action="/api/contact.php" />
       </div>
