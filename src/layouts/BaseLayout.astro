@@ -102,6 +102,15 @@ const canonicalHref = typeof canonicalURL === 'string'
         <link rel="alternate" hreflang="x-default" href={frURL} />
       </>
     )}
+
+    <!-- Plausible Analytics — chargé uniquement en production (cookieless, sans données perso) -->
+    {import.meta.env.PROD && (
+      <script
+        defer
+        data-domain="agilion.ca"
+        src="https://plausible.io/js/script.js"
+      ></script>
+    )}
   </head>
   <body class="flex flex-col min-h-screen">
     <a

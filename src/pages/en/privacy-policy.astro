@@ -1,0 +1,179 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+const lang = 'en' as const;
+const title = 'Privacy Policy — Agilion';
+const description = 'Agilion\'s Privacy Policy: how we collect, use, and protect your personal information. Compliant with PIPEDA (Canada) and GDPR principles for European visitors.';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  lang={lang}
+  alternateSlug="/politique-confidentialite"
+>
+  <article class="py-20 bg-surface">
+    <div class="container-site max-w-3xl mx-auto">
+
+      <header class="mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">
+          Privacy Policy
+        </h1>
+        <p class="text-gray-500 text-sm">
+          Last updated: January 2026
+        </p>
+      </header>
+
+      <div class="prose prose-lg max-w-none text-gray-700 space-y-10">
+
+        <!-- 1. Introduction -->
+        <section>
+          <h2 class="text-2xl font-bold text-primary mb-4">1. Introduction</h2>
+          <p>
+            Agilion Inc. (<strong>"Agilion"</strong>, "we", "us", "our") is committed to protecting the privacy of individuals who visit our website <a href="https://agilion.ca" class="text-primary hover:underline">agilion.ca</a> or communicate with us in the context of our services. This Privacy Policy describes the types of personal information we may collect, how we use it, and the measures we take to protect it.
+          </p>
+          <p class="mt-4">
+            Our policy complies with Canada's <em>Personal Information Protection and Electronic Documents Act</em> (PIPEDA) and, where applicable to our European visitors, with the general principles of the General Data Protection Regulation (GDPR) of the European Union.
+          </p>
+        </section>
+
+        <!-- 2. Information Collected -->
+        <section>
+          <h2 class="text-2xl font-bold text-primary mb-4">2. Information We Collect</h2>
+          <p>We collect personal information in two main ways:</p>
+
+          <h3 class="text-xl font-semibold text-primary mt-6 mb-3">2.1 Contact Form</h3>
+          <p>
+            When you submit our contact form, we collect the information you voluntarily provide:
+          </p>
+          <ul class="list-disc pl-6 mt-3 space-y-1">
+            <li><strong>Full name</strong> — to identify you and personalize our response.</li>
+            <li><strong>Email address</strong> — to reply to you.</li>
+            <li><strong>Phone number</strong> (optional) — if you wish to be contacted by phone.</li>
+            <li><strong>Company name</strong> (optional) — to understand your business context.</li>
+            <li><strong>Message</strong> — to process your request.</li>
+          </ul>
+          <p class="mt-4">
+            This information is transmitted securely and used solely to respond to your request.
+          </p>
+
+          <h3 class="text-xl font-semibold text-primary mt-6 mb-3">2.2 Anonymous Analytics Data</h3>
+          <p>
+            Our site uses <strong>Plausible Analytics</strong>, a privacy-friendly web traffic analysis tool. Plausible is designed without tracking cookies and collects no personally identifiable information. The aggregated information collected includes:
+          </p>
+          <ul class="list-disc pl-6 mt-3 space-y-1">
+            <li>Pages visited and approximate visit duration</li>
+            <li>Country of origin (country level only, no precise geolocation)</li>
+            <li>Device type and browser</li>
+            <li>Traffic source (search engine, direct link, referrer)</li>
+          </ul>
+          <p class="mt-4">
+            This data is strictly aggregated and anonymous. It does not allow us to identify you individually. To learn more: <a href="https://plausible.io/data-policy" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Plausible's data policy</a>.
+          </p>
+        </section>
+
+        <!-- 3. Use of Information -->
+        <section>
+          <h2 class="text-2xl font-bold text-primary mb-4">3. Use of Information</h2>
+          <p>The personal information you send us via the contact form is used exclusively to:</p>
+          <ul class="list-disc pl-6 mt-3 space-y-1">
+            <li>Respond to your information request or quote inquiry</li>
+            <li>Establish initial communication in the context of a potential project</li>
+            <li>Follow up on your request if necessary</li>
+          </ul>
+          <p class="mt-4">
+            We never use your contact information for unsolicited marketing. We will not add you to any mailing list without your explicit consent.
+          </p>
+        </section>
+
+        <!-- 4. Retention -->
+        <section>
+          <h2 class="text-2xl font-bold text-primary mb-4">4. Data Retention</h2>
+          <p>
+            Personal information collected through our contact form is retained for a maximum period of <strong>12 months</strong> from our last exchange, or until the conclusion of the project if it moves forward. After this period, your information is securely deleted.
+          </p>
+          <p class="mt-4">
+            If a business relationship is established, information may be retained longer in accordance with applicable legal and accounting obligations.
+          </p>
+        </section>
+
+        <!-- 5. Sharing -->
+        <section>
+          <h2 class="text-2xl font-bold text-primary mb-4">5. Sharing of Information</h2>
+          <p>
+            Agilion does not sell, rent, or share your personal information with third parties for commercial purposes. Your data may be shared only in the following situations:
+          </p>
+          <ul class="list-disc pl-6 mt-3 space-y-1">
+            <li>
+              <strong>Brevo (formerly Sendinblue)</strong> — We use Brevo to send transactional emails (confirmation of receipt of your message). Brevo is GDPR-certified and processes data on servers located in the European Union. For more information: <a href="https://www.brevo.com/legal/privacypolicy/" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Brevo's privacy policy</a>.
+            </li>
+            <li class="mt-2">
+              <strong>Legal obligation</strong> — We may disclose information if required by law or compelled by a competent authority.
+            </li>
+          </ul>
+        </section>
+
+        <!-- 6. Your Rights -->
+        <section>
+          <h2 class="text-2xl font-bold text-primary mb-4">6. Your Rights</h2>
+          <p>
+            Under PIPEDA and, where applicable, the GDPR, you have the following rights regarding your personal information:
+          </p>
+          <ul class="list-disc pl-6 mt-3 space-y-2">
+            <li><strong>Right of access</strong> — You may request to view the personal information we hold about you.</li>
+            <li><strong>Right of rectification</strong> — You may request the correction of inaccurate or incomplete information.</li>
+            <li><strong>Right to erasure</strong> — You may request the deletion of your personal information, subject to legal retention obligations.</li>
+            <li><strong>Right to object</strong> — You may object to the processing of your data for marketing communications.</li>
+            <li><strong>Right to data portability</strong> — You may request to receive your data in a structured, machine-readable format.</li>
+          </ul>
+          <p class="mt-4">
+            To exercise any of these rights, please contact us at: <a href="mailto:info@agilion.ca" class="text-primary hover:underline">info@agilion.ca</a>. We commit to processing your request within 30 days.
+          </p>
+        </section>
+
+        <!-- 7. Cookies -->
+        <section>
+          <h2 class="text-2xl font-bold text-primary mb-4">7. Cookies and Tracking Technologies</h2>
+          <p>
+            <strong>agilion.ca does not place any tracking or profiling cookies</strong> on your device. Our analytics tool, Plausible Analytics, is specifically designed to operate without cookies, in full respect of visitor privacy.
+          </p>
+          <p class="mt-4">
+            No third-party cookies (Google Analytics, Meta Pixel, etc.) are used on this site. You can browse agilion.ca without any persistent data being stored in your browser.
+          </p>
+        </section>
+
+        <!-- 8. Security -->
+        <section>
+          <h2 class="text-2xl font-bold text-primary mb-4">8. Data Security</h2>
+          <p>
+            We implement appropriate technical and organizational measures to protect your personal information against loss, theft, unauthorized access, and disclosure. These measures include HTTPS/TLS encryption, strict access controls, and limiting data access to only those individuals who need it to respond to your request.
+          </p>
+        </section>
+
+        <!-- 9. Contact -->
+        <section>
+          <h2 class="text-2xl font-bold text-primary mb-4">9. Contact Us</h2>
+          <p>
+            For any questions regarding this Privacy Policy or to exercise your rights, please contact us:
+          </p>
+          <address class="not-italic mt-4 bg-blue-50 rounded-lg p-6 border border-blue-100">
+            <p class="font-semibold text-primary text-lg mb-2">Agilion Inc.</p>
+            <p>Privacy Officer</p>
+            <p class="mt-2">
+              Email: <a href="mailto:info@agilion.ca" class="text-primary hover:underline font-medium">info@agilion.ca</a>
+            </p>
+            <p>Quebec, Canada</p>
+          </address>
+        </section>
+
+        <!-- Updates -->
+        <section class="border-t border-gray-200 pt-8">
+          <p class="text-gray-500 text-sm">
+            This Privacy Policy may be updated periodically to reflect changes in our practices or legal requirements. The date of the last revision is indicated at the top of this document. By continuing to use our site after a modification, you accept the updated policy.
+          </p>
+        </section>
+
+      </div>
+    </div>
+  </article>
+</BaseLayout>

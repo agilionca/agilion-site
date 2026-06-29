@@ -27,6 +27,7 @@ export function getLocalePath(path: string, lang: Lang): string {
 const ROUTE_MAP_FR_TO_EN: Record<string, string> = {
   '/a-propos': '/en/about',
   '/blogue': '/en/blog',
+  '/politique-confidentialite': '/en/privacy-policy',
 };
 // Inverse automatique
 const ROUTE_MAP_EN_TO_FR: Record<string, string> = Object.fromEntries(

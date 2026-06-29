@@ -9,12 +9,12 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 const services = [
-  { key: 'services.custom-software.title' as const, path: '/services/logiciel-sur-mesure' },
-  { key: 'services.integration.title' as const, path: '/services/integration' },
-  { key: 'services.cloud.title' as const, path: '/services/cloud' },
-  { key: 'services.cybersecurity.title' as const, path: '/services/cybersecurite' },
-  { key: 'services.web.title' as const, path: '/services/web' },
-  { key: 'services.consulting.title' as const, path: '/services/consultation' },
+  { key: 'services.custom-software.title' as const, path: '/services' },
+  { key: 'services.integration.title' as const, path: '/services' },
+  { key: 'services.cloud.title' as const, path: '/services' },
+  { key: 'services.cybersecurity.title' as const, path: '/services' },
+  { key: 'services.web.title' as const, path: '/services' },
+  { key: 'services.consulting.title' as const, path: '/services' },
 ];
 
 const company = [
@@ -176,7 +176,7 @@ const year = new Date().getFullYear();
         &copy; {year} Agilion Inc. {t('footer.rights')}
       </p>
       <a
-        href={getLocalePath('/politique-de-confidentialite', lang)}
+        href={lang === 'fr' ? '/politique-confidentialite' : '/en/privacy-policy'}
         class="hover:text-white/80 transition-colors focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-white rounded"
       >
         {t('footer.privacy')}
