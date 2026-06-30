@@ -38,11 +38,10 @@ const year = new Date().getFullYear();
       <div class="md:col-span-1">
         <a
           href={getLocalePath('/', lang)}
-          class="flex items-center gap-3 mb-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          class="flex items-center mb-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           aria-label="Agilion"
         >
-          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center text-white font-bold text-base" aria-hidden="true">A</div>
-          <span class="font-bold text-xl text-white">Agilion</span>
+          <img src="/logo-agilion.png" alt="Agilion" width="80" height="61" class="h-10 w-auto brightness-0 invert" loading="lazy" />
         </a>
         <p class="text-white/60 text-sm leading-relaxed max-w-xs">
           {t('footer.tagline')}

@@ -31,13 +31,17 @@ const homeHref = lang === 'fr' ? '/' : '/en';
   <div class="container-site">
     <div class="flex items-center justify-between h-16 md:h-20">
       <!-- Logo -->
-      <a
-        href={homeHref}
-        class="flex items-center gap-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-        aria-label={lang === 'fr' ? "Agilion — Retour à l'accueil" : "Agilion — Back to home"}
-      >
-        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center text-white font-bold text-sm" aria-hidden="true">A</div>
-        <span class="font-bold text-xl text-white">Agilion</span>
+      <a href={lang === 'fr' ? '/' : '/en'}
+         aria-label={lang === 'fr' ? "Agilion — Retour à l'accueil" : "Agilion — Back to home"}
+         class="flex items-center gap-2 shrink-0">
+        <img
+          src="/logo-agilion.png"
+          alt="Agilion"
+          width="80"
+          height="61"
+          class="h-10 w-auto"
+          loading="eager"
+        />
       </a>
 
       <!-- Desktop Navigation -->
