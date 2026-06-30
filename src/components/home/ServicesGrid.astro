@@ -1,5 +1,5 @@
 ---
-import { useTranslations, getLocalePath, type Lang } from '@i18n/index';
+import { useTranslations, type Lang } from '@i18n/index';
 
 interface Props {
   lang: Lang;
@@ -10,75 +10,88 @@ const t = useTranslations(lang);
 
 const services = [
   {
-    titleKey: 'services.custom-software.title' as const,
-    descKey: 'services.custom-software.description' as const,
-    ctaKey: 'services.custom-software.cta' as const,
+    key: 'custom-software' as const,
+    img: '/images/services/logiciel.webp',
+    color: 'from-indigo-500 to-purple-600',
     href: lang === 'fr' ? '/services#logiciel-sur-mesure' : '/en/services#custom-software',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
   },
   {
-    titleKey: 'services.integration.title' as const,
-    descKey: 'services.integration.description' as const,
-    ctaKey: 'services.integration.cta' as const,
+    key: 'integration' as const,
+    img: '/images/services/integration.webp',
+    color: 'from-cyan-500 to-blue-600',
     href: lang === 'fr' ? '/services#integration' : '/en/services#integration',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="3"/><circle cx="19" cy="19" r="3"/><circle cx="5" cy="19" r="3"/><line x1="12" y1="8" x2="12" y2="14"/><line x1="12" y1="14" x2="19" y2="16"/><line x1="12" y1="14" x2="5" y2="16"/></svg>`,
   },
   {
-    titleKey: 'services.cloud.title' as const,
-    descKey: 'services.cloud.description' as const,
-    ctaKey: 'services.cloud.cta' as const,
+    key: 'cloud' as const,
+    img: '/images/services/cloud.webp',
+    color: 'from-blue-500 to-indigo-600',
     href: lang === 'fr' ? '/services#cloud' : '/en/services#cloud',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>`,
   },
   {
-    titleKey: 'services.cybersecurity.title' as const,
-    descKey: 'services.cybersecurity.description' as const,
-    ctaKey: 'services.cybersecurity.cta' as const,
+    key: 'cybersecurity' as const,
+    img: '/images/services/securite.webp',
+    color: 'from-red-500 to-orange-600',
     href: lang === 'fr' ? '/services#cybersecurite' : '/en/services#cybersecurity',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
   },
   {
-    titleKey: 'services.web.title' as const,
-    descKey: 'services.web.description' as const,
-    ctaKey: 'services.web.cta' as const,
+    key: 'web' as const,
+    img: '/images/services/web.webp',
+    color: 'from-purple-500 to-pink-600',
     href: lang === 'fr' ? '/services#web' : '/en/services#web',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
   },
   {
-    titleKey: 'services.consulting.title' as const,
-    descKey: 'services.consulting.description' as const,
-    ctaKey: 'services.consulting.cta' as const,
+    key: 'consulting' as const,
+    img: '/images/services/consultation.webp',
+    color: 'from-teal-500 to-cyan-600',
     href: lang === 'fr' ? '/services#consultation' : '/en/services#consulting',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><line x1="3" y1="12" x2="9" y2="12"/><line x1="15" y1="12" x2="21" y2="12"/><line x1="12" y1="3" x2="12" y2="9"/><line x1="12" y1="15" x2="12" y2="21"/></svg>`,
   },
-];
+] as const;
 ---
 
-<section class="py-20 bg-surface" aria-labelledby="services-heading">
+<section class="py-24 bg-section-dark" aria-labelledby="services-heading">
   <div class="container-site">
-    <div class="text-center mb-14">
-      <h2 id="services-heading" class="text-3xl md:text-4xl font-bold text-primary mb-4">
+    <div class="text-center mb-16 reveal">
+      <h2 id="services-heading" class="text-4xl md:text-5xl font-bold text-white mb-4">
         {t('services.title')}
       </h2>
-      <p class="text-gray-600 max-w-xl mx-auto text-lg">
+      <p class="text-slate-400 text-xl max-w-2xl mx-auto">
         {t('services.subtitle')}
       </p>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {services.map(({ titleKey, descKey, ctaKey, href, icon }) => (
-        <article class="group bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md hover:-translate-y-1 transition-all duration-200 flex flex-col">
-          <div class="text-primary-light mb-4" set:html={icon} />
-          <h3 class="text-lg font-semibold text-primary mb-2">{t(titleKey)}</h3>
-          <p class="text-gray-600 text-sm leading-relaxed flex-1 mb-4">{t(descKey)}</p>
-          <a
-            href={href}
-            class="inline-flex items-center gap-1 text-sm font-medium text-primary-light hover:text-primary transition-colors group-hover:gap-2"
-          >
-            {t(ctaKey)}
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="transition-transform duration-150"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-        </article>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 stagger">
+      {services.map(({ key, img, color, href }) => (
+        <a
+          href={href}
+          class="group relative overflow-hidden rounded-2xl card-3d shimmer reveal cursor-pointer"
+          style="text-decoration: none;"
+        >
+          <!-- Image with overlay -->
+          <div class="relative h-56 overflow-hidden">
+            <img
+              src={img}
+              alt={t(`services.${key}.title`)}
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="450"
+            />
+            <div class={`absolute inset-0 bg-gradient-to-br ${color} opacity-70 group-hover:opacity-50 transition-opacity duration-300`}></div>
+          </div>
+
+          <!-- Content -->
+          <div class="glass p-6 rounded-b-2xl" style="border-top: none; border-radius: 0 0 1rem 1rem;">
+            <h3 class="text-white font-bold text-lg mb-2">{t(`services.${key}.title`)}</h3>
+            <p class="text-slate-300 text-sm leading-relaxed">{t(`services.${key}.description`)}</p>
+            <div class="flex items-center gap-2 mt-4 text-indigo-400 text-sm font-medium">
+              <span>{t('common.learnMore')}</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="transition-transform group-hover:translate-x-1" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </div>
+          </div>
+        </a>
       ))}
     </div>
   </div>

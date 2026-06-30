@@ -12,6 +12,13 @@ export const ui = {
     'hero.subtitle': 'Agilion accompagne les entreprises canadiennes et américaines dans leur transformation numérique — solutions sur mesure, intégration, cloud et cybersécurité.',
     'hero.cta.primary': 'Obtenir un devis gratuit',
     'hero.cta.secondary': 'Découvrir nos services',
+    'hero.badge': 'Firme TI québécoise — Canada & USA',
+    'hero.title.line1': 'Transformez votre entreprise',
+    'hero.title.line2': 'avec la puissance du cloud',
+    'hero.stat.years': "Années d'expérience",
+    'hero.stat.projects': 'Projets livrés',
+    'hero.stat.satisfaction': 'Clients satisfaits',
+    'hero.scroll': 'Défiler',
 
     // TrustBar
     'trustbar.since': 'Depuis 2015',
@@ -198,6 +205,13 @@ export const ui = {
     'hero.subtitle': 'Agilion helps Canadian and American businesses accelerate their digital transformation — custom software, integrations, cloud infrastructure, and cybersecurity.',
     'hero.cta.primary': 'Get a Free Quote',
     'hero.cta.secondary': 'Explore Our Services',
+    'hero.badge': 'Quebec IT Firm — Canada & USA',
+    'hero.title.line1': 'Transform your business',
+    'hero.title.line2': 'with the power of cloud',
+    'hero.stat.years': 'Years of experience',
+    'hero.stat.projects': 'Projects delivered',
+    'hero.stat.satisfaction': 'Client satisfaction',
+    'hero.scroll': 'Scroll',
 
     // TrustBar
     'trustbar.since': 'Since 2015',

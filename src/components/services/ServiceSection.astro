@@ -1,7 +1,8 @@
 ---
 interface Props {
   id: string;
-  icon: string; // SVG inline string
+  icon: string;
+  img?: string;
   title: string;
   description: string;
   bullets: string[];
@@ -13,6 +14,7 @@ interface Props {
 const {
   id,
   icon,
+  img,
   title,
   description,
   bullets,
@@ -25,26 +27,46 @@ const {
 <section id={id} class="py-20 scroll-mt-20" aria-labelledby={`${id}-heading`}>
   <div class="container-site">
     <div class={`flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-16 ${reversed ? 'lg:flex-row-reverse' : ''}`}>
-      <!-- Icon column -->
-      <div class="flex-shrink-0 flex justify-center lg:w-64">
-        <div class="w-32 h-32 rounded-2xl bg-primary/5 flex items-center justify-center text-primary-light">
-          <Fragment set:html={icon} />
-        </div>
+
+      <!-- Visual column -->
+      <div class="flex-shrink-0 flex justify-center lg:w-80">
+        {img ? (
+          <div class="relative w-full max-w-sm rounded-2xl overflow-hidden card-3d shimmer" style="box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
+            <img
+              src={img}
+              alt={title}
+              class="w-full h-64 object-cover"
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="450"
+            />
+            <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(15,23,42,0.6) 0%, transparent 60%);"></div>
+            <!-- Icon overlay -->
+            <div class="absolute bottom-4 left-4 w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(99,102,241,0.9); backdrop-filter: blur(8px);">
+              <span class="text-white" style="width: 24px; height: 24px;" set:html={icon.replace('width="64" height="64"', 'width="24" height="24"')} />
+            </div>
+          </div>
+        ) : (
+          <div class="w-32 h-32 rounded-2xl flex items-center justify-center" style="background: rgba(99,102,241,0.15); color: #818cf8;">
+            <Fragment set:html={icon} />
+          </div>
+        )}
       </div>
 
       <!-- Content column -->
-      <div class="flex-1">
-        <h2 id={`${id}-heading`} class="text-2xl md:text-3xl font-bold text-primary mb-4">
+      <div class="flex-1 reveal-left">
+        <h2 id={`${id}-heading`} class="text-2xl md:text-3xl font-bold text-white mb-4">
           {title}
         </h2>
-        <p class="text-gray-600 leading-relaxed mb-6 text-lg">
+        <p class="leading-relaxed mb-6 text-lg" style="color: #94a3b8;">
           {description}
         </p>
         <ul class="space-y-3 mb-8" role="list">
           {bullets.map((bullet) => (
             <li class="flex items-start gap-3">
               <svg
-                class="flex-shrink-0 mt-0.5 text-primary-light"
+                class="flex-shrink-0 mt-0.5"
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
                 height="20"
@@ -55,18 +77,19 @@ const {
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 aria-hidden="true"
+                style="color: #6366F1;"
               >
                 <polyline points="20 6 9 17 4 12" />
               </svg>
-              <span class="text-gray-700">{bullet}</span>
+              <span style="color: #cbd5e1;">{bullet}</span>
             </li>
           ))}
         </ul>
         <a
           href={ctaHref}
-          class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          class="btn-primary"
         >
-          {ctaText}
+          <span>{ctaText}</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
       </div>

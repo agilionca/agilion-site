@@ -5,6 +5,33 @@ import { useTranslations } from '@i18n/index';
 
 const lang = 'en' as const;
 const t = useTranslations(lang);
+
+const stats = [
+  { num: '10+', label: t('hero.stat.years') },
+  { num: '50+', label: t('hero.stat.projects') },
+  { num: '100%', label: t('hero.stat.satisfaction') },
+];
+
+const whyItems = [
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+    titleKey: 'why.local.title' as const,
+    descKey: 'why.local.desc' as const,
+    gradient: 'from-indigo-500 to-purple-600',
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+    titleKey: 'why.agile.title' as const,
+    descKey: 'why.agile.desc' as const,
+    gradient: 'from-cyan-500 to-blue-600',
+  },
+  {
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    titleKey: 'why.partner.title' as const,
+    descKey: 'why.partner.desc' as const,
+    gradient: 'from-teal-500 to-cyan-600',
+  },
+];
 ---
 
 <BaseLayout
@@ -13,62 +40,56 @@ const t = useTranslations(lang);
   lang={lang}
 >
   <!-- ===================== HERO ===================== -->
-  <section class="relative min-h-[85vh] flex items-center overflow-hidden bg-primary">
-    <div class="absolute inset-0 bg-gradient-to-br from-primary via-primary to-primary-light opacity-90" aria-hidden="true"></div>
-    <div class="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-primary-light/10 blur-3xl" aria-hidden="true"></div>
-    <div class="absolute bottom-1/4 left-1/4 w-64 h-64 rounded-full bg-accent/10 blur-2xl" aria-hidden="true"></div>
+  <section class="relative min-h-screen flex items-center bg-mesh dot-pattern overflow-hidden">
+    <!-- Floating orbs -->
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl float-slow pointer-events-none" style="background: rgba(99,102,241,0.2);" aria-hidden="true"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full blur-3xl float pointer-events-none" style="background: rgba(6,182,212,0.2);" aria-hidden="true"></div>
+    <div class="absolute top-1/2 left-1/2 w-32 h-32 rounded-full blur-2xl float-slow pointer-events-none" style="background: rgba(139,92,246,0.3); animation-delay: 2s;" aria-hidden="true"></div>
 
-    <div class="relative container-site py-24 md:py-32 text-center">
-      <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/90 text-sm font-medium px-4 py-2 rounded-full mb-8">
-        <span class="w-2 h-2 rounded-full bg-accent animate-pulse" aria-hidden="true"></span>
-        {t('trustbar.since')} · {t('trustbar.projects')}
+    <div class="relative z-10 container-site py-32 text-center">
+      <!-- Badge pill -->
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border text-sm font-medium mb-8 reveal" style="border-color: rgba(99,102,241,0.3); color: #a5b4fc;">
+        <span class="w-2 h-2 rounded-full pulse-glow" style="background: #818cf8;" aria-hidden="true"></span>
+        {t('hero.badge')}
       </div>
-      <h1 class="text-4xl md:text-6xl font-bold mb-6 text-white text-balance leading-tight">
-        {t('hero.title')}
+
+      <!-- H1 -->
+      <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-6 reveal" style="transition-delay: 0.1s;">
+        <span class="text-white">{t('hero.title.line1')}</span><br />
+        <span class="gradient-text">{t('hero.title.line2')}</span>
       </h1>
-      <p class="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-10 leading-relaxed">
+
+      <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-10 reveal" style="color: #94a3b8; transition-delay: 0.2s;">
         {t('hero.subtitle')}
       </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a
-          href="/en/contact"
-          class="px-8 py-4 bg-accent text-white font-semibold rounded-lg hover:bg-amber-500 active:scale-95 transition-all duration-150 text-lg shadow-lg shadow-accent/30"
-        >
-          {t('hero.cta.primary')}
+
+      <!-- CTAs -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center reveal" style="transition-delay: 0.3s;">
+        <a href="/en/contact" class="btn-primary pulse-glow text-base">
+          <span>{t('hero.cta.primary')}</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a
-          href="/en/services"
-          class="px-8 py-4 bg-white/10 text-white font-semibold rounded-lg hover:bg-white/20 active:scale-95 transition-all duration-150 text-lg border border-white/30"
-        >
-          {t('hero.cta.secondary')}
+        <a href="/en/services" class="btn-secondary text-base">
+          <span>{t('hero.cta.secondary')}</span>
         </a>
       </div>
-    </div>
-  </section>
 
-  <!-- ===================== TRUST BAR ===================== -->
-  <section class="bg-gray-50 border-y border-gray-200 py-8" aria-label={t('trustbar.ariaLabel')}>
-    <div class="container-site">
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12 text-center">
-        <div class="flex items-center gap-3">
-          <span class="text-2xl font-bold text-primary">2015</span>
-          <span class="text-gray-600">{t('trustbar.since')}</span>
-        </div>
-        <div class="hidden sm:block w-px h-8 bg-gray-300" aria-hidden="true"></div>
-        <div class="flex items-center gap-3">
-          <span class="text-2xl font-bold text-primary">50+</span>
-          <span class="text-gray-600">{t('trustbar.projects')}</span>
-        </div>
-        <div class="hidden sm:block w-px h-8 bg-gray-300" aria-hidden="true"></div>
-        <div class="flex items-center gap-3">
-          <span class="text-gray-600">{t('trustbar.clients')}</span>
-        </div>
-        <div class="hidden sm:block w-px h-8 bg-gray-300" aria-hidden="true"></div>
-        <div class="flex items-center gap-4">
-          <span class="px-3 py-1 bg-white border border-gray-200 rounded-full text-xs font-semibold text-gray-600 shadow-sm">AWS</span>
-          <span class="px-3 py-1 bg-white border border-gray-200 rounded-full text-xs font-semibold text-gray-600 shadow-sm">Azure</span>
-          <span class="px-3 py-1 bg-white border border-gray-200 rounded-full text-xs font-semibold text-gray-600 shadow-sm">GCP</span>
-        </div>
+      <!-- Stats -->
+      <div class="flex flex-wrap justify-center gap-10 mt-16 reveal" style="transition-delay: 0.4s;">
+        {stats.map(stat => (
+          <div class="text-center">
+            <div class="text-3xl font-bold gradient-text">{stat.num}</div>
+            <div class="text-sm mt-1" style="color: #64748b;">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-xs reveal" style="color: #475569; transition-delay: 0.5s;">
+      <span>{t('hero.scroll')}</span>
+      <div class="w-5 h-8 rounded-full border flex items-start justify-center p-1" style="border-color: #334155;">
+        <div class="w-1 h-2 rounded-full animate-bounce" style="background: #64748b;"></div>
       </div>
     </div>
   </section>
@@ -77,79 +98,66 @@ const t = useTranslations(lang);
   <ServicesGrid lang={lang} />
 
   <!-- ===================== WHY AGILION ===================== -->
-  <section class="py-20 bg-white" aria-labelledby="why-heading">
+  <section class="py-24 bg-section-accent" aria-labelledby="why-heading">
     <div class="container-site">
-      <div class="text-center mb-14">
-        <h2 id="why-heading" class="text-3xl md:text-4xl font-bold text-primary mb-4">
+      <div class="text-center mb-16 reveal">
+        <h2 id="why-heading" class="text-4xl md:text-5xl font-bold text-white mb-4">
           {t('why.title')}
         </h2>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="text-center px-6">
-          <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/5 text-primary-light mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 stagger">
+        {whyItems.map(({ icon, titleKey, descKey, gradient }) => (
+          <div class="text-center px-6 reveal">
+            <div class={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${gradient} mb-6 float`} style="box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
+              <span class="text-white" set:html={icon} />
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">{t(titleKey)}</h3>
+            <p class="leading-relaxed" style="color: rgba(219,234,254,0.8);">{t(descKey)}</p>
           </div>
-          <h3 class="text-xl font-bold text-primary mb-3">{t('why.local.title')}</h3>
-          <p class="text-gray-600 leading-relaxed">{t('why.local.desc')}</p>
-        </div>
-        <div class="text-center px-6">
-          <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/5 text-primary-light mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          </div>
-          <h3 class="text-xl font-bold text-primary mb-3">{t('why.agile.title')}</h3>
-          <p class="text-gray-600 leading-relaxed">{t('why.agile.desc')}</p>
-        </div>
-        <div class="text-center px-6">
-          <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/5 text-primary-light mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <h3 class="text-xl font-bold text-primary mb-3">{t('why.partner.title')}</h3>
-          <p class="text-gray-600 leading-relaxed">{t('why.partner.desc')}</p>
-        </div>
+        ))}
       </div>
     </div>
   </section>
 
   <!-- ===================== TESTIMONIALS ===================== -->
-  <section class="py-20 bg-surface" aria-labelledby="testimonials-heading">
+  <section class="py-24 bg-section-dark" aria-labelledby="testimonials-heading">
     <div class="container-site">
-      <div class="text-center mb-12">
-        <h2 id="testimonials-heading" class="text-3xl font-bold text-primary mb-4">
+      <div class="text-center mb-12 reveal">
+        <h2 id="testimonials-heading" class="text-3xl md:text-4xl font-bold text-white mb-4">
           {t('testimonials.title')}
         </h2>
       </div>
-      {/* TODO: Remplacer par vrais témoignages */}
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <blockquote class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-          <p class="text-gray-700 italic leading-relaxed mb-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 stagger">
+        <blockquote class="glass p-6 reveal">
+          <p class="italic leading-relaxed mb-4" style="color: #cbd5e1;">
             "Agilion transformed our data management in just a few weeks. Their team is responsive, professional, and truly listens to our needs."
           </p>
           <footer>
             <cite class="not-italic">
-              <span class="font-semibold text-primary">Mary T.</span>
-              <span class="text-gray-500 text-sm">, Director, Quebec SME</span>
+              <span class="font-semibold text-white">Mary T.</span>
+              <span class="text-sm" style="color: #64748b;">, Director, Quebec SME</span>
             </cite>
           </footer>
         </blockquote>
-        <blockquote class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-          <p class="text-gray-700 italic leading-relaxed mb-4">
+        <blockquote class="glass p-6 reveal">
+          <p class="italic leading-relaxed mb-4" style="color: #cbd5e1;">
             "The cloud migration they completed reduced our costs by 40% while improving our availability. A trusted long-term partner."
           </p>
           <footer>
             <cite class="not-italic">
-              <span class="font-semibold text-primary">Jean-François B.</span>
-              <span class="text-gray-500 text-sm">, CTO, Manufacturing Company</span>
+              <span class="font-semibold text-white">Jean-François B.</span>
+              <span class="text-sm" style="color: #64748b;">, CTO, Manufacturing Company</span>
             </cite>
           </footer>
         </blockquote>
-        <blockquote class="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-          <p class="text-gray-700 italic leading-relaxed mb-4">
+        <blockquote class="glass p-6 reveal">
+          <p class="italic leading-relaxed mb-4" style="color: #cbd5e1;">
             "Our client portal delivered in 8 weeks, perfectly adapted to our processes. I recommend Agilion to any company looking for concrete results."
           </p>
           <footer>
             <cite class="not-italic">
-              <span class="font-semibold text-primary">Sophie L.</span>
-              <span class="text-gray-500 text-sm">, VP Operations, Services Firm</span>
+              <span class="font-semibold text-white">Sophie L.</span>
+              <span class="text-sm" style="color: #64748b;">, VP Operations, Services Firm</span>
             </cite>
           </footer>
         </blockquote>
@@ -158,20 +166,20 @@ const t = useTranslations(lang);
   </section>
 
   <!-- ===================== CTA FINAL ===================== -->
-  <section class="py-20 bg-primary" aria-labelledby="cta-heading">
-    <div class="container-site text-center">
-      <h2 id="cta-heading" class="text-3xl md:text-4xl font-bold text-white mb-4">
+  <section class="relative py-32 overflow-hidden bg-section-accent" aria-labelledby="cta-heading">
+    <div class="absolute inset-0 dot-pattern opacity-20" aria-hidden="true"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-px" style="background: linear-gradient(90deg, transparent, #6366F1, transparent);" aria-hidden="true"></div>
+
+    <div class="relative container-site text-center reveal">
+      <h2 id="cta-heading" class="text-4xl md:text-5xl font-bold text-white mb-6">
         {t('cta.title')}
       </h2>
-      <p class="text-white/80 text-lg mb-10 max-w-xl mx-auto">
+      <p class="text-xl mb-10 max-w-xl mx-auto" style="color: rgba(219,234,254,0.8);">
         {t('cta.subtitle')}
       </p>
-      <a
-        href="/en/contact"
-        class="inline-flex items-center gap-2 px-10 py-4 bg-accent text-white font-bold text-lg rounded-lg hover:bg-amber-500 active:scale-95 transition-all duration-150 shadow-lg shadow-accent/30"
-      >
-        {t('cta.button')}
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      <a href="/en/contact" class="btn-primary pulse-glow text-lg px-8 py-4">
+        <span>{t('cta.button')}</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
   </section>

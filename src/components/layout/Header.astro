@@ -5,14 +5,12 @@ import { useTranslations, type Lang } from '@i18n/index';
 interface Props {
   lang: Lang;
   currentPath: string;
-  alternateUrl?: string; // Override pour le switcher de langue sur les articles
+  alternateUrl?: string;
 }
 
 const { lang, currentPath, alternateUrl } = Astro.props;
 const t = useTranslations(lang);
 
-// Explicit FR and EN paths for each nav item
-// (about and blog differ between FR and EN, so we don't use getLocalePath)
 const navItems = [
   { key: 'nav.home' as const, frPath: '/', enPath: '/en' },
   { key: 'nav.services' as const, frPath: '/services', enPath: '/en/services' },
@@ -26,7 +24,8 @@ const homeHref = lang === 'fr' ? '/' : '/en';
 ---
 
 <header
-  class="sticky top-0 z-50 bg-primary/95 backdrop-blur-sm shadow-md"
+  id="main-header"
+  class="sticky top-0 z-50"
   role="banner"
 >
   <div class="container-site">
@@ -34,33 +33,11 @@ const homeHref = lang === 'fr' ? '/' : '/en';
       <!-- Logo -->
       <a
         href={homeHref}
-        class="flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        class="flex items-center gap-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         aria-label={lang === 'fr' ? "Agilion — Retour à l'accueil" : "Agilion — Back to home"}
       >
-        <svg
-          width="36"
-          height="36"
-          viewBox="0 0 36 36"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <rect width="36" height="36" rx="8" fill="#2563EB" />
-          <path
-            d="M10 26L18 10L26 26"
-            stroke="white"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M13 21H23"
-            stroke="white"
-            stroke-width="3"
-            stroke-linecap="round"
-          />
-        </svg>
-        <span class="text-white font-bold text-xl tracking-tight">Agilion</span>
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center text-white font-bold text-sm" aria-hidden="true">A</div>
+        <span class="font-bold text-xl text-white">Agilion</span>
       </a>
 
       <!-- Desktop Navigation -->
@@ -71,15 +48,15 @@ const homeHref = lang === 'fr' ? '/' : '/en';
         {
           navItems.map(({ key, frPath, enPath }) => {
             const href = lang === 'fr' ? frPath : enPath;
-            const isActive = currentPath === href || (frPath === '/' && lang === 'fr' && currentPath === '') || (enPath === '/en' && lang === 'en' && currentPath === '/en');
+            const isActive = currentPath === href
+              || (frPath === '/' && lang === 'fr' && currentPath === '')
+              || (enPath === '/en' && lang === 'en' && currentPath === '/en');
             return (
               <a
                 href={href}
                 aria-current={isActive ? 'page' : undefined}
-                class={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-white ${
-                  isActive
-                    ? 'bg-white/15 text-white'
-                    : 'text-white/80 hover:text-white hover:bg-white/10'
+                class={`nav-link px-4 py-2 text-sm font-medium transition-colors duration-200 ${
+                  isActive ? 'text-white' : 'text-white/80'
                 }`}
               >
                 {t(key)}
@@ -96,12 +73,13 @@ const homeHref = lang === 'fr' ? '/' : '/en';
         </div>
         <a
           href={contactHref}
-          class="hidden md:inline-flex items-center gap-1 px-4 py-2 bg-accent text-white font-semibold text-sm rounded-lg hover:bg-amber-500 active:scale-95 transition-all duration-150 shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          class="hidden md:inline-flex items-center gap-2 btn-primary text-sm py-2 px-5"
         >
-          {t('common.getQuote')}
+          <span>{t('common.getQuote')}</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
 
-        <!-- Hamburger (mobile) — CSS-only using checkbox trick -->
+        <!-- Hamburger (mobile) -->
         <label
           for="mobile-menu-toggle"
           class="md:hidden flex flex-col justify-center items-center w-10 h-10 cursor-pointer rounded-lg hover:bg-white/10 transition-colors"
@@ -115,12 +93,13 @@ const homeHref = lang === 'fr' ? '/' : '/en';
     </div>
   </div>
 
-  <!-- Mobile menu — keyboard accessible: checkbox focusable, label has matching for -->
+  <!-- Mobile menu -->
   <input type="checkbox" id="mobile-menu-toggle" class="peer sr-only" aria-label={lang === 'fr' ? 'Ouvrir le menu de navigation' : 'Open navigation menu'} aria-expanded="false" />
   <div
     id="mobile-nav-panel"
     aria-hidden="true"
-    class="md:hidden max-h-0 overflow-hidden peer-checked:max-h-screen transition-all duration-300 ease-in-out bg-primary border-t border-white/10"
+    class="md:hidden max-h-0 overflow-hidden peer-checked:max-h-screen transition-all duration-300 ease-in-out border-t border-white/10"
+    style="background: rgba(15,23,42,0.98); backdrop-filter: blur(20px);"
   >
     <nav
       id="mobile-nav"
@@ -144,14 +123,43 @@ const homeHref = lang === 'fr' ? '/' : '/en';
         <LanguageSwitcher lang={lang} currentPath={currentPath} alternateUrl={alternateUrl} />
         <a
           href={contactHref}
-          class="px-4 py-2 bg-accent text-white font-semibold text-sm rounded-lg hover:bg-amber-500 transition-colors"
+          class="btn-primary text-sm py-2 px-4"
         >
-          {t('common.getQuote')}
+          <span>{t('common.getQuote')}</span>
         </a>
       </div>
     </nav>
   </div>
 </header>
+
+<style>
+  header {
+    transition: background 0.3s, box-shadow 0.3s;
+    background: transparent;
+  }
+  header.scrolled {
+    background: rgba(15,23,42,0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.08);
+  }
+  .nav-link {
+    position: relative;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #6366F1, #06B6D4);
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover { color: white; }
+  .nav-link:hover::after { width: 100%; }
+  .nav-link[aria-current="page"]::after { width: 100%; }
+</style>
 
 <script>
   const toggle = document.getElementById('mobile-menu-toggle') as HTMLInputElement | null;
