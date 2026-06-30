@@ -1,0 +1,113 @@
+---
+title: "Why Your Website Speed Is Costing You Customers (And How to Fix It)"
+description: "A slow website costs you sales. Discover the measurable impact of web performance on conversions and how to improve it."
+pubDate: 2026-05-01
+author: "Agilion Team"
+tags: ["web performance", "Core Web Vitals", "SEO", "conversions", "speed"]
+category: "web"
+lang: "en"
+translationSlug: "vitesse-site-web-impact-conversions"
+draft: false
+---
+
+Your site loads in 4 seconds. That seems reasonable? Statistically, you've already lost half your visitors. Google has documented that 53% of mobile users abandon a site that takes more than 3 seconds to load. In a context where your website is often the first point of contact with a potential customer, web performance isn't a technical detail — it's a direct business concern.
+
+## What the Numbers Say
+
+The data on speed's impact on conversions is unequivocal:
+
+- **Amazon** estimated that every additional 100ms of latency cost 1% of sales.
+- **Walmart** saw a 2% increase in conversions for every second gained.
+- **Google** has penalized slow sites in search results since 2021, with Core Web Vitals as a ranking signal.
+- A Deloitte study demonstrated that a 0.1-second improvement in load time increases conversion rates by an average of 8% for e-commerce sites.
+
+This isn't theory. For an SMB generating $500,000 in online revenue, improving site performance could represent $20,000 to $80,000 in additional annual revenue — without adding a single dollar in advertising.
+
+## Understanding Core Web Vitals
+
+Google standardized web performance metrics in 2021 with Core Web Vitals. These three indicators measure user experience concretely and directly influence your ranking in search results.
+
+### LCP — Largest Contentful Paint
+
+*Target: under 2.5 seconds*
+
+LCP measures the time needed to display the largest visible element on the page (typically a hero image or main text block). It's the primary indicator of speed perception by the user. A high LCP means the user is staring at a blank or partially loaded screen for several seconds.
+
+**Common causes**: unoptimized images, slow servers, absence of caching, render-blocking fonts.
+
+### INP — Interaction to Next Paint
+
+*Target: under 200ms*
+
+Measures the page's responsiveness to user interactions — clicking a button, typing in a form, selecting from a menu. A high INP creates a feeling of a "frozen" or unresponsive site, particularly frustrating on mobile.
+
+**Common causes**: excessive JavaScript running on the main thread, third-party scripts (analytics, chatbots, ads), heavy CSS animations.
+
+### CLS — Cumulative Layout Shift
+
+*Target: under 0.1*
+
+Measures the visual stability of the page. Have you ever been on a site where elements jump around during loading, causing you to click the wrong button? That's high CLS. Particularly damaging for e-commerce sites and contact forms.
+
+**Common causes**: images without defined dimensions, web fonts replacing system fonts, dynamically injected content.
+
+## The Most Common Culprits
+
+### Unoptimized Images
+
+This is by far the most widespread problem. Uploading a 4MB photo directly from your camera is catastrophic for performance. Best practices:
+
+- Use modern formats (WebP, AVIF) that offer 25-50% additional compression compared to JPEG
+- Define display dimensions and use responsive images (`srcset`)
+- Load off-screen images in lazy mode (`loading="lazy"`)
+- Use an image CDN that automatically optimizes and serves appropriate sizes
+
+### Excessive JavaScript
+
+Modern websites are often overloaded with scripts: Google Analytics, Hotjar, Intercom, Facebook Pixel, chat widgets, A/B testing scripts, and more. Each adds weight and execution time. An audit of your third-party scripts often reveals unused or redundant tools that can be safely removed.
+
+### No Caching or CDN
+
+If your site is hosted on a single server in one city and your visitor is on the other coast, every resource makes a round trip. A CDN (Content Delivery Network) distributes static resources from servers close to each user, dramatically reducing latency.
+
+### Too Many Web Fonts
+
+Loading five font families with ten variations each is a luxury your load time can't afford. Each font is an additional resource that often blocks page rendering until it's fully downloaded.
+
+## How to Improve Your Site's Performance
+
+### Step 1: Measure Before Acting
+
+Use Google PageSpeed Insights or Lighthouse to get a baseline score and identify priority problems. These tools are free and provide specific, actionable recommendations.
+
+### Step 2: Attack the Quick Wins
+
+Some improvements are simple and fast:
+- Compress and convert all images to WebP
+- Enable Gzip/Brotli compression on the server
+- Set up a CDN (Cloudflare offers a free plan)
+- Remove unused scripts and plugins
+
+### Step 3: Deeper Optimizations
+
+To go further, modifications at the code and architecture level are necessary:
+- JavaScript audit and reduction (code splitting, lazy loading)
+- Critical rendering path optimization
+- Aggressive caching of static resources
+- Preloading of critical resources
+
+### Step 4: Measure Impact and Iterate
+
+Web performance isn't a one-time project. Content updates, new plugins, and third-party scripts added over time gradually degrade performance. Set up continuous monitoring with tools like Google Search Console or automated alerts.
+
+## What Does Performance Improvement Cost?
+
+For a typical WordPress or e-commerce site, a performance audit and optimization generally represents between $2,000 and $10,000 depending on complexity and the site's initial state. It's an investment that often pays for itself within a few months through improved conversions and organic search rankings.
+
+For custom-built sites or complex web applications, a performance-focused refactor may represent a larger project, but the gains are proportional.
+
+A concrete example: one of our retail clients saw their mobile conversion rate increase by 34% after we reduced their mobile load time from 6.2 seconds to 1.8 seconds. The project paid for itself in under two months.
+
+The Agilion team conducts web performance audits and optimizations for SMBs that want to transform their website from a conversion obstacle into a growth engine.
+
+**Is your website living up to your business ambitions?** [Request a free performance audit →](/en/contact)

@@ -236,3 +236,114 @@ img, video { max-width: 100%; height: auto; display: block; }
   html { scroll-behavior: auto; }
   .reveal, .reveal-left, .reveal-right { opacity: 1; transform: none; }
 }
+
+/* ================================================
+   PROSE — Article MDX styling
+   ================================================ */
+.prose-custom {
+  color: #CBD5E1;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  max-width: 72ch;
+}
+.prose-custom h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: white;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(99,102,241,0.3);
+}
+.prose-custom h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #E2E8F0;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+.prose-custom p { margin-bottom: 1.25rem; }
+.prose-custom strong { color: white; font-weight: 600; }
+.prose-custom em { color: #A5B4FC; font-style: italic; }
+.prose-custom a {
+  color: #818CF8;
+  text-decoration: underline;
+  text-decoration-color: rgba(129,140,248,0.4);
+  transition: color 0.2s;
+}
+.prose-custom a:hover { color: #A5B4FC; }
+.prose-custom ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.25rem;
+}
+.prose-custom ul li {
+  padding-left: 1.5rem;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+.prose-custom ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366F1, #06B6D4);
+}
+.prose-custom ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.prose-custom ol li { margin-bottom: 0.5rem; }
+.prose-custom blockquote {
+  border-left: 3px solid #6366F1;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  background: rgba(99,102,241,0.08);
+  border-radius: 0 0.5rem 0.5rem 0;
+  color: #A5B4FC;
+  font-style: italic;
+}
+.prose-custom code {
+  background: rgba(255,255,255,0.08);
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  color: #06B6D4;
+  font-family: 'Fira Code', 'Courier New', monospace;
+}
+.prose-custom pre {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+.prose-custom pre code {
+  background: none;
+  padding: 0;
+  color: #E2E8F0;
+}
+.prose-custom table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+.prose-custom th {
+  background: rgba(99,102,241,0.2);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 2px solid rgba(99,102,241,0.4);
+}
+.prose-custom td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: #CBD5E1;
+}
+.prose-custom tr:hover td { background: rgba(255,255,255,0.03); }

@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '@layouts/BaseLayout.astro';
-import ArticleCard from '@components/blog/ArticleCard.astro';
 import { estimateReadingTime } from '@utils/reading-time';
 
 const lang = 'en' as const;
@@ -10,6 +9,39 @@ const allArticles = await getCollection('blog-en', (e) => !e.data.draft);
 const articles = allArticles.sort(
   (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
 );
+
+const categories = [
+  { slug: 'all', label: 'All' },
+  { slug: 'logiciel', label: 'Software' },
+  { slug: 'cloud', label: 'Cloud' },
+  { slug: 'securite', label: 'Cybersecurity' },
+  { slug: 'web', label: 'Web' },
+  { slug: 'consultation', label: 'Consulting' },
+];
+
+const categoryGradients: Record<string, string> = {
+  logiciel: 'from-indigo-500 to-violet-600',
+  cloud: 'from-cyan-500 to-blue-600',
+  securite: 'from-red-500 to-rose-600',
+  web: 'from-emerald-500 to-teal-600',
+  consultation: 'from-amber-500 to-orange-600',
+};
+
+const categoryBadgeColors: Record<string, { bg: string; text: string; border: string }> = {
+  logiciel:     { bg: 'rgba(99,102,241,0.15)',   text: '#a5b4fc', border: 'rgba(99,102,241,0.3)' },
+  cloud:        { bg: 'rgba(6,182,212,0.15)',     text: '#67e8f9', border: 'rgba(6,182,212,0.3)' },
+  securite:     { bg: 'rgba(239,68,68,0.15)',     text: '#fca5a5', border: 'rgba(239,68,68,0.3)' },
+  web:          { bg: 'rgba(16,185,129,0.15)',    text: '#6ee7b7', border: 'rgba(16,185,129,0.3)' },
+  consultation: { bg: 'rgba(245,158,11,0.15)',    text: '#fcd34d', border: 'rgba(245,158,11,0.3)' },
+};
+
+const featuredArticle = articles[0];
+const remainingArticles = articles.slice(1);
+
+const categoryLabel: Record<string, string> = {
+  cloud: 'Cloud', securite: 'Cybersecurity', logiciel: 'Software',
+  web: 'Web', consultation: 'Consulting', ia: 'AI',
+};
 ---
 
 <BaseLayout
@@ -18,70 +50,207 @@ const articles = allArticles.sort(
   lang={lang}
   alternateSlug="/blogue"
 >
-  <!-- Header -->
-  <section class="bg-primary text-white py-16 md:py-24">
-    <div class="container-site text-center">
-      <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/90 text-sm font-medium px-4 py-2 rounded-full mb-6">
-        <span class="w-2 h-2 rounded-full bg-accent animate-pulse" aria-hidden="true"></span>
-        Quebec IT Expertise
+  <!-- Hero -->
+  <section class="relative pt-32 pb-20 bg-mesh dot-pattern overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0F172A] z-10"></div>
+    <div class="relative z-20 container-site text-center">
+      <div class="inline-flex items-center gap-2 mb-6 reveal" style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); padding: 0.5rem 1rem; border-radius: 9999px;">
+        <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" aria-hidden="true"></span>
+        <span class="text-indigo-300 text-sm font-medium">Quebec IT Expertise</span>
       </div>
-      <h1 class="text-3xl md:text-5xl font-bold mb-4 text-balance">
-        Agilion Blog
+      <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 reveal">
+        Agilion <span class="gradient-text">Blog</span>
       </h1>
-      <p class="text-lg text-white/80 max-w-2xl mx-auto">
+      <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-6 reveal">
         Practical insights, analysis and news on cloud, cybersecurity,
         software development and digital transformation for SMBs.
       </p>
-    </div>
-  </section>
-
-  <!-- Articles grid -->
-  <section class="container-site py-16">
-    {articles.length === 0 ? (
-      <p class="text-center text-gray-500 py-16">No articles yet. Check back soon!</p>
-    ) : (
-      <>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {articles.map((article) => (
-            <ArticleCard
-              title={article.data.title}
-              description={article.data.description}
-              slug={article.id}
-              pubDate={article.data.pubDate}
-              tags={article.data.tags}
-              category={article.data.category}
-              readingTime={article.data.readingTime ?? estimateReadingTime(article.body ?? '')}
-              image={article.data.image}
-              lang={lang}
-            />
-          ))}
-        </div>
-
-        {articles.length > 10 && (
-          <p class="text-center text-gray-400 mt-12 text-sm">
-            Pagination coming soon — {articles.length} articles available
-          </p>
-        )}
-      </>
-    )}
-  </section>
-
-  <!-- CTA section -->
-  <section class="bg-gray-50 border-t border-gray-100 py-16">
-    <div class="container-site text-center">
-      <h2 class="text-2xl font-bold text-gray-900 mb-4">
-        Need IT expertise for your business?
-      </h2>
-      <p class="text-gray-600 mb-8 max-w-xl mx-auto">
-        Our experts guide SMBs through their digital transformation.
-        Let's discuss your challenges.
+      <p class="text-slate-500 text-sm reveal">
+        {articles.length} article{articles.length !== 1 ? 's' : ''} published
       </p>
-      <a
-        href="/en/contact"
-        class="inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-3 rounded-xl hover:bg-primary-dark transition-colors"
-      >
-        Talk to an expert →
-      </a>
     </div>
   </section>
+
+  <!-- Category filters -->
+  <section class="bg-section-dark border-b border-white/10 sticky top-16 z-30">
+    <div class="container-site py-4">
+      <nav class="flex items-center gap-2 overflow-x-auto pb-1" aria-label="Category filters">
+        {categories.map(cat => (
+          <a
+            href={cat.slug === 'all' ? '/en/blog' : `/en/blog#${cat.slug}`}
+            class="flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap"
+            style={cat.slug === 'all'
+              ? 'background: rgba(99,102,241,0.25); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.4);'
+              : 'background: rgba(255,255,255,0.05); color: #94a3b8; border: 1px solid rgba(255,255,255,0.1);'}
+          >
+            {cat.label}
+          </a>
+        ))}
+      </nav>
+    </div>
+  </section>
+
+  <div class="bg-section-dark">
+    <div class="container-site py-16">
+
+      {articles.length === 0 ? (
+        <p class="text-center text-slate-500 py-16">No articles yet. Check back soon!</p>
+      ) : (
+        <>
+          <!-- Featured article (first, full width) -->
+          {featuredArticle && (
+            <div class="mb-12 reveal">
+              <a href={`/en/blog/${featuredArticle.id}`} class="group block glass rounded-3xl overflow-hidden card-3d">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                  <!-- Image / gradient -->
+                  <div class={`relative aspect-video lg:aspect-auto lg:min-h-[320px] bg-gradient-to-br ${categoryGradients[featuredArticle.data.category] ?? 'from-indigo-500 to-violet-600'} flex items-center justify-center overflow-hidden`}>
+                    {featuredArticle.data.image ? (
+                      <img
+                        src={featuredArticle.data.image}
+                        alt={featuredArticle.data.title}
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        loading="eager"
+                      />
+                    ) : (
+                      <div class="text-center px-8">
+                        <span class="text-white/30 text-6xl font-bold uppercase tracking-widest block">
+                          {categoryLabel[featuredArticle.data.category] ?? featuredArticle.data.category}
+                        </span>
+                        <div class="mt-4 w-16 h-1 bg-white/30 mx-auto rounded-full"></div>
+                      </div>
+                    )}
+                    <div class="absolute top-4 left-4">
+                      <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/20 text-white border border-white/30">
+                        Featured
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Content -->
+                  <div class="p-8 lg:p-10 flex flex-col justify-center">
+                    <div class="flex items-center gap-3 mb-4">
+                      {(() => {
+                        const badge = categoryBadgeColors[featuredArticle.data.category];
+                        return badge ? (
+                          <span class="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider"
+                                style={`background: ${badge.bg}; color: ${badge.text}; border: 1px solid ${badge.border}`}>
+                            {categoryLabel[featuredArticle.data.category] ?? featuredArticle.data.category}
+                          </span>
+                        ) : null;
+                      })()}
+                      <span class="text-slate-500 text-sm">
+                        {featuredArticle.data.readingTime ?? estimateReadingTime(featuredArticle.body ?? '')} min read
+                      </span>
+                    </div>
+
+                    <h2 class="text-2xl lg:text-3xl font-bold text-white mb-4 leading-tight group-hover:text-indigo-300 transition-colors">
+                      {featuredArticle.data.title}
+                    </h2>
+
+                    <p class="text-slate-400 mb-6 leading-relaxed line-clamp-3">
+                      {featuredArticle.data.description}
+                    </p>
+
+                    <div class="flex items-center justify-between mt-auto">
+                      <div class="flex items-center gap-2 text-slate-500 text-sm">
+                        <span>{featuredArticle.data.author}</span>
+                        <span>·</span>
+                        <time datetime={featuredArticle.data.pubDate.toISOString()}>
+                          {featuredArticle.data.pubDate.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' })}
+                        </time>
+                      </div>
+                      <span class="text-indigo-400 font-semibold text-sm group-hover:text-indigo-300 transition-colors">
+                        Read article →
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          )}
+
+          <!-- 3-column grid -->
+          {remainingArticles.length > 0 && (
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 stagger">
+              {remainingArticles.map((article) => {
+                const badge = categoryBadgeColors[article.data.category];
+                const gradient = categoryGradients[article.data.category] ?? 'from-indigo-500 to-violet-600';
+                const rt = article.data.readingTime ?? estimateReadingTime(article.body ?? '');
+                return (
+                  <a href={`/en/blog/${article.id}`} class="group glass rounded-2xl overflow-hidden card-3d flex flex-col block reveal">
+                    <!-- Gradient image -->
+                    <div class={`relative aspect-video bg-gradient-to-br ${gradient} flex items-center justify-center flex-shrink-0 overflow-hidden`}>
+                      {article.data.image ? (
+                        <img
+                          src={article.data.image}
+                          alt={article.data.title}
+                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <span class="text-white/30 text-sm font-bold uppercase tracking-widest">
+                          {categoryLabel[article.data.category] ?? article.data.category}
+                        </span>
+                      )}
+                    </div>
+
+                    <!-- Content -->
+                    <div class="p-6 flex flex-col flex-1">
+                      <div class="flex items-center gap-2 mb-3">
+                        {badge && (
+                          <span class="px-2.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wider"
+                                style={`background: ${badge.bg}; color: ${badge.text}; border: 1px solid ${badge.border}`}>
+                            {categoryLabel[article.data.category] ?? article.data.category}
+                          </span>
+                        )}
+                        <span class="text-slate-500 text-xs">{rt} min</span>
+                      </div>
+
+                      <h2 class="text-base font-bold text-white mb-2 leading-snug group-hover:text-indigo-300 transition-colors line-clamp-2">
+                        {article.data.title}
+                      </h2>
+
+                      <p class="text-slate-400 text-sm mb-4 flex-1 line-clamp-3">
+                        {article.data.description}
+                      </p>
+
+                      <div class="flex items-center justify-between mt-auto pt-4 border-t border-white/10">
+                        <time datetime={article.data.pubDate.toISOString()} class="text-slate-500 text-xs">
+                          {article.data.pubDate.toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </time>
+                        <span class="text-indigo-400 text-xs font-semibold group-hover:text-indigo-300 transition-colors">
+                          Read →
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+          )}
+        </>
+      )}
+    </div>
+
+    <!-- CTA section -->
+    <section class="border-t border-white/10">
+      <div class="container-site py-20 text-center">
+        <div class="max-w-2xl mx-auto glass p-10 rounded-3xl reveal" style="border: 1px solid rgba(99,102,241,0.2)">
+          <h2 class="text-2xl font-bold text-white mb-4">
+            Need IT expertise for your business?
+          </h2>
+          <p class="text-slate-400 mb-8">
+            Our experts guide SMBs through their digital transformation.
+            Let's discuss your challenges.
+          </p>
+          <a href="/en/contact" class="btn-primary">
+            <span>Talk to an expert</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
 </BaseLayout>

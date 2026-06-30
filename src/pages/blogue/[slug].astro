@@ -1,7 +1,6 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '@layouts/BaseLayout.astro';
-import ArticleMeta from '@components/blog/ArticleMeta.astro';
 import { estimateReadingTime } from '@utils/reading-time';
 
 export async function getStaticPaths() {
@@ -33,6 +32,32 @@ const lang = 'fr' as const;
 const computedReadingTime = readingTime ?? estimateReadingTime(article.body ?? '');
 const canonicalURL = new URL(`/blogue/${article.id}`, Astro.site).toString();
 const alternateUrl = translationSlug ? `/en/blog/${translationSlug}` : undefined;
+
+const categoryColors: Record<string, string> = {
+  logiciel: 'rgba(99,102,241,0.2)',
+  cloud: 'rgba(6,182,212,0.2)',
+  securite: 'rgba(239,68,68,0.2)',
+  web: 'rgba(16,185,129,0.2)',
+  consultation: 'rgba(245,158,11,0.2)',
+};
+const categoryBorderColors: Record<string, string> = {
+  logiciel: 'rgba(99,102,241,0.4)',
+  cloud: 'rgba(6,182,212,0.4)',
+  securite: 'rgba(239,68,68,0.4)',
+  web: 'rgba(16,185,129,0.4)',
+  consultation: 'rgba(245,158,11,0.4)',
+};
+const categoryTextColors: Record<string, string> = {
+  logiciel: '#a5b4fc',
+  cloud: '#67e8f9',
+  securite: '#fca5a5',
+  web: '#6ee7b7',
+  consultation: '#fcd34d',
+};
+
+const bgColor = categoryColors[category] ?? 'rgba(99,102,241,0.2)';
+const borderColor = categoryBorderColors[category] ?? 'rgba(99,102,241,0.4)';
+const textColor = categoryTextColors[category] ?? '#a5b4fc';
 ---
 
 <BaseLayout
@@ -48,122 +73,123 @@ const alternateUrl = translationSlug ? `/en/blog/${translationSlug}` : undefined
   alternateSlug={translationSlug ? `/en/blog/${translationSlug}` : undefined}
   alternateUrl={alternateUrl}
 >
-  <article class="container-site py-12 max-w-3xl mx-auto">
-    <!-- Back link -->
-    <a href="/blogue" class="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-primary transition-colors mb-8">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
-      Retour au blogue
-    </a>
+  <!-- Hero article avec gradient -->
+  <div class="relative pt-32 pb-16 bg-mesh dot-pattern overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#0F172A] z-10"></div>
+    <div class="relative z-20 container-site max-w-4xl">
+      <!-- Back link -->
+      <a href="/blogue" class="inline-flex items-center gap-1 text-sm text-slate-400 hover:text-indigo-300 transition-colors mb-8 reveal">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Retour au blogue
+      </a>
 
-    <!-- Article header -->
-    <header class="mb-8">
-      <!-- Category -->
-      <div class="mb-4">
-        <span class="inline-block text-xs font-semibold uppercase tracking-wider text-primary bg-primary/10 px-3 py-1 rounded-full">
+      <!-- Catégorie + temps de lecture -->
+      <div class="flex items-center gap-3 mb-6 reveal">
+        <span class="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider"
+              style={`background: ${bgColor}; color: ${textColor}; border: 1px solid ${borderColor}`}>
           {category}
         </span>
+        <span class="text-slate-400 text-sm">{computedReadingTime} min de lecture</span>
       </div>
 
-      <!-- Title -->
-      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight text-balance">
-        {title}
-      </h1>
+      <!-- Titre H1 -->
+      <h1 class="text-3xl md:text-5xl font-bold text-white leading-tight mb-6 reveal">{title}</h1>
 
       <!-- Description lead -->
-      <p class="text-lg text-gray-600 leading-relaxed">{description}</p>
+      <p class="text-lg text-slate-300 leading-relaxed mb-6 reveal max-w-3xl">{description}</p>
 
       <!-- Meta -->
-      <ArticleMeta
-        pubDate={pubDate}
-        updatedDate={updatedDate}
-        author={author}
-        readingTime={computedReadingTime}
-        tags={tags}
-        lang={lang}
-        translationSlug={translationSlug}
-        category={category}
-      />
-    </header>
-
-    <!-- Featured image -->
-    {image && (
-      <figure class="mb-10 rounded-2xl overflow-hidden">
-        <img
-          src={image}
-          alt={title}
-          class="w-full object-cover"
-          loading="eager"
-          decoding="async"
-        />
-      </figure>
-    )}
-
-    <!-- Article content -->
-    <div class="prose prose-gray prose-lg max-w-none
-      prose-headings:font-bold prose-headings:text-gray-900
-      prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
-      prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
-      prose-p:text-gray-700 prose-p:leading-relaxed
-      prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-      prose-strong:text-gray-900
-      prose-ul:my-4 prose-li:my-1
-      prose-blockquote:border-primary prose-blockquote:text-gray-600">
-      <Content />
-    </div>
-
-    <!-- CTA fin d'article -->
-    <div class="mt-16 p-8 bg-primary/5 border border-primary/20 rounded-2xl text-center">
-      <h2 class="text-xl font-bold text-gray-900 mb-2">Besoin d'expertise TI ?</h2>
-      <p class="text-gray-600 mb-6">
-        Notre équipe accompagne les PME québécoises dans leur transformation numérique.
-        Discutons de vos besoins.
-      </p>
-      <a
-        href="/contact"
-        class="inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-3 rounded-xl hover:bg-primary-dark transition-colors"
-      >
-        Parlons-en →
-      </a>
-    </div>
-
-    <!-- Prev / Next navigation -->
-    {(prev || next) && (
-      <nav class="mt-12 pt-8 border-t border-gray-100 grid grid-cols-1 sm:grid-cols-2 gap-4" aria-label="Navigation entre articles">
-        {prev && (
-          <a
-            href={`/blogue/${prev.id}`}
-            class="group flex flex-col gap-1 p-4 rounded-xl border border-gray-100 hover:border-primary/30 hover:bg-primary/5 transition-all"
-          >
-            <span class="text-xs text-gray-400 flex items-center gap-1">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-              </svg>
-              Article précédent
-            </span>
-            <span class="text-sm font-semibold text-gray-700 group-hover:text-primary transition-colors line-clamp-2">
-              {prev.data.title}
-            </span>
+      <div class="flex flex-wrap items-center gap-4 text-slate-400 text-sm reveal">
+        <span class="flex items-center gap-2">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          {pubDate.toLocaleDateString('fr-CA', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </span>
+        <span>·</span>
+        <span>{author}</span>
+        {translationSlug && (
+          <a href={`/en/blog/${translationSlug}`} class="ml-auto flex items-center gap-1 text-indigo-400 hover:text-indigo-300 transition-colors">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+            Read in English
           </a>
         )}
-        {next && (
-          <a
-            href={`/blogue/${next.id}`}
-            class={`group flex flex-col gap-1 p-4 rounded-xl border border-gray-100 hover:border-primary/30 hover:bg-primary/5 transition-all ${!prev ? 'sm:col-start-2' : ''}`}
-          >
-            <span class="text-xs text-gray-400 flex items-center gap-1 justify-end">
-              Article suivant
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </span>
-            <span class="text-sm font-semibold text-gray-700 group-hover:text-primary transition-colors line-clamp-2 text-right">
-              {next.data.title}
-            </span>
-          </a>
-        )}
-      </nav>
-    )}
-  </article>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenu + sidebar -->
+  <div class="bg-section-dark min-h-screen">
+    <div class="container-site max-w-6xl py-16">
+      <div class="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-12">
+
+        <!-- Contenu MDX -->
+        <article class="prose-custom reveal">
+          <Content />
+        </article>
+
+        <!-- Sidebar sticky -->
+        <aside class="space-y-6 lg:sticky lg:top-24 lg:self-start">
+          <!-- Tags -->
+          {tags && tags.length > 0 && (
+            <div class="glass p-6 rounded-2xl reveal">
+              <h3 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Tags</h3>
+              <div class="flex flex-wrap gap-2">
+                {tags.map(tag => (
+                  <span class="px-3 py-1 rounded-full text-xs text-indigo-300 border border-indigo-500/30" style="background: rgba(99,102,241,0.1)">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <!-- CTA sidebar -->
+          <div class="glass p-6 rounded-2xl reveal" style="border: 1px solid rgba(99,102,241,0.3)">
+            <h3 class="text-white font-bold mb-2">Besoin d'expertise ?</h3>
+            <p class="text-slate-400 text-sm mb-4">Parlons de votre projet. Premier appel gratuit.</p>
+            <a href="/contact" class="btn-primary w-full text-center text-sm py-3 block">
+              <span>Nous contacter</span>
+            </a>
+          </div>
+
+          <!-- Date de publication -->
+          {updatedDate && (
+            <div class="glass p-4 rounded-xl reveal">
+              <p class="text-slate-500 text-xs">
+                Mis à jour le {updatedDate.toLocaleDateString('fr-CA', { year: 'numeric', month: 'long', day: 'numeric' })}
+              </p>
+            </div>
+          )}
+        </aside>
+      </div>
+
+      <!-- Prev / Next -->
+      {(prev || next) && (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16 pt-16 border-t border-white/10 reveal">
+          {prev && (
+            <a href={`/blogue/${prev.id}`} class="glass p-6 rounded-2xl card-3d group block">
+              <p class="text-slate-400 text-xs mb-2">← Article précédent</p>
+              <p class="text-white font-semibold group-hover:text-indigo-300 transition-colors">{prev.data.title}</p>
+            </a>
+          )}
+          {next && (
+            <a href={`/blogue/${next.id}`} class={`glass p-6 rounded-2xl card-3d group block ${!prev ? 'md:col-start-2' : ''}`}>
+              <p class="text-slate-400 text-xs mb-2 md:text-right">Article suivant →</p>
+              <p class="text-white font-semibold group-hover:text-indigo-300 transition-colors md:text-right">{next.data.title}</p>
+            </a>
+          )}
+        </div>
+      )}
+    </div>
+  </div>
 </BaseLayout>
